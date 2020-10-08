@@ -12,6 +12,7 @@ import ShortPositions from "./ShortPositions";
 import Balance from "./Balance";
 import FellToday from "./FellToday";
 import ShortCandidate from "./ShortCandidate";
+import Performance from "./Performance";
 
 const Navigation = () => {
   return (
@@ -41,6 +42,11 @@ const Navigation = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/fell">
                 Falling
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/perf">
+                Performance
               </Link>
             </li>
             <li className="nav-item">
@@ -120,6 +126,12 @@ const Navigation = () => {
           <MMI />
           <AVD />
           <Etf />
+        </Route>
+
+        <Route path="/perf">
+          <MMI />
+          <AVD />
+          <Performance />
         </Route>
 
         <Route path="/shortpositions">

@@ -9,7 +9,7 @@ const RSIOverbought = (props) => {
       const AllCos = JSON.parse(AllCosString);
       //set the filetered data for display
       const rsiFiltered =AllCos.filter(i=>i.RSI>67).sort((a,b)=>b.RSI-a.RSI)
-      console.log(rsiFiltered);
+      
       setData(rsiFiltered);
     };
     fetchData();
