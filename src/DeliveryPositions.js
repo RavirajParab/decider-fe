@@ -1,62 +1,62 @@
 import React, { useState, useEffect } from "react";
 
-const ShortPositions = (props) => {
+const DeliveryPositions = (props) => {
  
-  const [ShortPositions, SetShortPositions] = useState([]);
+  const [DeliveryPositions, SetDeliveryPositions] = useState([]);
   const [TotalPL, SetTotalPL]=useState(0);
   useEffect(()=>{
-    const getShortPositions=async ()=>{
-        const shortPositionsRes = await fetch(`https://deciderse.netlify.app/.netlify/functions/trade?method=GetShortPositions&date=${new Date().toISOString()}`);
-        const shortPositions = await shortPositionsRes.json();
-        const SIDs=shortPositions.map(i=>i.SID).join(',');
+    const getDeliveryPositions=async ()=>{
+        const DeliveryPositionsRes = await fetch(`https://deciderse.netlify.app/.netlify/functions/trade?method=GetDeliveryPositions&date=${new Date().toISOString()}`);
+        const DeliveryPositions = await DeliveryPositionsRes.json();
+        const SIDs=DeliveryPositions.map(i=>i.SID).join(',');
         const LiveQuotesRes = await fetch(`https://deciderse.netlify.app/.netlify/functions/quotes?sid=${SIDs}&date=${new Date().toISOString()}`);
         const LiveData = await LiveQuotesRes.json();
-        const NewShortPositions = LiveData.map((i,index)=>{
-          return {...shortPositions[index],
+        const NewDeliveryPositions = LiveData.map((i,index)=>{
+          return {...DeliveryPositions[index],
                   mr:Number(((i.h-i.o)*100/i.o).toFixed(2)),
-                  cp:i.price,pl:Math.round((shortPositions[index].Buy-i.price)*shortPositions[index].Qty)}
+                  cp:i.price,pl:Math.round((i.price-DeliveryPositions[index].Buy)*DeliveryPositions[index].Qty)}
         });
         let pl=0;
-        NewShortPositions.forEach(element => {
+        NewDeliveryPositions.forEach(element => {
           pl+=element.pl;
         });
-        console.log(NewShortPositions);
+        console.log(NewDeliveryPositions);
         SetTotalPL(pl);    
-        SetShortPositions(NewShortPositions);
+        SetDeliveryPositions(NewDeliveryPositions);
         }
-        getShortPositions();
+        getDeliveryPositions();
   },[]);
 
   //change PL
   const evaluatePL=async ()=>{
-    const SIDs=ShortPositions.map(i=>i.SID).join(',');
+    const SIDs=DeliveryPositions.map(i=>i.SID).join(',');
     const LiveQuotesRes = await fetch(`https://deciderse.netlify.app/.netlify/functions/quotes?sid=${SIDs}&date=${new Date().toISOString()}`);
     const LiveData = await LiveQuotesRes.json();
-    const NewShortPositions = LiveData.map((i,index)=>{
-      return {...ShortPositions[index],
-              cp:i.price,pl:Math.round((ShortPositions[index].Buy-i.price)*ShortPositions[index].Qty)}
+    const NewDeliveryPositions = LiveData.map((i,index)=>{
+      return {...DeliveryPositions[index],
+              cp:i.price,pl:Math.round((i.price-DeliveryPositions[index].Buy)*DeliveryPositions[index].Qty)}
     });
     let pl=0;
-    NewShortPositions.forEach(element => {
+    NewDeliveryPositions.forEach(element => {
       pl+=element.pl;
     });
-    console.log(NewShortPositions);
+    console.log(NewDeliveryPositions);
     SetTotalPL(pl);    
-    SetShortPositions(NewShortPositions);
+    SetDeliveryPositions(NewDeliveryPositions);
   }
 
   const coverUp=async (security)=>{
-    const coverShort ={
+    const coverDelivery ={
       Symbol :security.Symbol,
       SellPrice: security.cp
   }
-    console.log(coverShort);
-    const dataString= JSON.stringify(coverShort);
+    console.log(coverDelivery);
+    const dataString= JSON.stringify(coverDelivery);
     const encodedData= window.btoa(dataString);
-    await fetch(`https://deciderse.netlify.app/.netlify/functions/trade?method=CoverShortPosition&data=${encodedData}`);
+    await fetch(`https://deciderse.netlify.app/.netlify/functions/trade?method=CoverDeliveryPosition&data=${encodedData}`);
     //remove the entry from short positions
-    const copy_ShortPositions=[...ShortPositions].filter(i=>i.Symbol!==security.Symbol);
-    SetShortPositions(copy_ShortPositions);
+    const copy_DeliveryPositions=[...DeliveryPositions].filter(i=>i.Symbol!==security.Symbol);
+    SetDeliveryPositions(copy_DeliveryPositions);
   }
 
   return (
@@ -76,7 +76,7 @@ const ShortPositions = (props) => {
         </tr>
       </thead>
       <tbody>
-        {ShortPositions.map((i, index) => (
+        {DeliveryPositions.map((i, index) => (
           <tr key={index}>
             <td>
               <a
@@ -104,4 +104,4 @@ const ShortPositions = (props) => {
   );
 };
 
-export default ShortPositions;
+export default DeliveryPositions;

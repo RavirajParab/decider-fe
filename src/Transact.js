@@ -3,7 +3,7 @@ import FullSecurityData from "./data";
 import Notifier from "./Notifier";
 
 
-const Short = (props) => {
+const Transact = (props) => {
   const [Notification,SetNotification]=useState({});
   const AllCosString = localStorage.getItem("allcos");
   const AllCos = JSON.parse(AllCosString);
@@ -45,10 +45,33 @@ const Short = (props) => {
     const dataString = JSON.stringify(shortPosition);
     const encodedData = window.btoa(dataString);
     await fetch(
-      `https://deciderse.netlify.app/.netlify/functions/short?method=AddShortPosition&data=${encodedData}`
+      `https://deciderse.netlify.app/.netlify/functions/trade?method=AddShortPosition&data=${encodedData}`
     );
     SetNotification({
       message:'Shorted!',
+      type:'success'
+    });
+   
+  };
+
+  
+  const addDelivery = async (e) => {
+    e.preventDefault();
+    const shortPosition = {
+      Type: "delivery",
+      Symbol: SecurityCurrent.Symbol,
+      Buy: SecurityCurrent.price,
+      Qty: Qty,
+      SID: SecurityCurrent.sid,
+      Position: "open",
+    };
+    const dataString = JSON.stringify(shortPosition);
+    const encodedData = window.btoa(dataString);
+    await fetch(
+      `https://deciderse.netlify.app/.netlify/functions/trade?method=AddDeliveryPosition&data=${encodedData}`
+    );
+    SetNotification({
+      message:'Purched!',
       type:'success'
     });
    
@@ -108,11 +131,14 @@ const Short = (props) => {
         <button type="input" onClick={addShort} className="btn btn-warning">
           Short
         </button>{" "}
+        <button type="input" onClick={addDelivery} className="btn btn-success">
+          Buy
+        </button>{" "}
         &nbsp;
         <button
           type="input"
           onClick={showCompaniesWithNoSIDs}
-          className="btn btn-info"
+          className="btn btn-info mt-5"
         >
           Show New CompanyNames
         </button>
@@ -133,4 +159,4 @@ const Short = (props) => {
   );
 };
 
-export default Short;
+export default Transact;

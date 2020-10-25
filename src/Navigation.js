@@ -7,12 +7,13 @@ import FiveDaysPerformance from "./FiveDaysPerformance";
 import FourteenDaysPerformance from "./FourteenDaysPerformance";
 import RSIOverbought from "./RSIOverbought";
 import Etf from "./Etf";
-import Short from "./Short";
 import ShortPositions from "./ShortPositions";
 import Balance from "./Balance";
 import FellToday from "./FellToday";
 import ShortCandidate from "./ShortCandidate";
 import Performance from "./Performance";
+import Transact from "./Transact";
+import DeliveryPositions from "./DeliveryPositions";
 
 const Navigation = () => {
   return (
@@ -67,14 +68,20 @@ const Navigation = () => {
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link" to="/short">
-                Short
+              <Link className="nav-link" to="/transact">
+                Transact
               </Link>
             </li>
 
             <li className="nav-item">
               <Link className="nav-link" to="/shortpositions">
                 Short Positions
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link className="nav-link" to="/deliverypositions">
+                Delivery Positions
               </Link>
             </li>
 
@@ -118,8 +125,8 @@ const Navigation = () => {
           <ShortCandidate/>
         </Route>
 
-        <Route path="/short">
-          <Short />
+        <Route path="/transact">
+          <Transact />
         </Route>
 
         <Route path="/etf">
@@ -139,6 +146,14 @@ const Navigation = () => {
           <AVD />
           <ShortPositions />
         </Route>
+
+        
+        <Route path="/deliverypositions">
+          <MMI />
+          <AVD />
+          <DeliveryPositions />
+        </Route>
+
         <Route path="/balance">
           <Balance />
         </Route>
