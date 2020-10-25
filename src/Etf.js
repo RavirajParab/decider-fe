@@ -7,7 +7,7 @@ const Etf = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await Axios.get(
-        "https://fndecider.azurewebsites.net/api/etf"
+        "https://deciderse.netlify.app/.netlify/functions/etf"
       );
       const rsiData = result.data
         .sort((a, b) => a.rsi - b.rsi);

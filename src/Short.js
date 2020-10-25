@@ -17,7 +17,7 @@ const Short = (props) => {
   const securitySelected = async (e) => {
     const selectedSecurity = e.target.value;
     const company = FullSecurityData.find((i) => i.Symbol === selectedSecurity);
-    const query = `https://fndecider.azurewebsites.net/api/Quotes?sid=${
+    const query = `https://deciderse.netlify.app/.netlify/functions/quotes?sid=${
       company.sid
     }&date=${new Date().toISOString()}`;
     const res = await fetch(query);
@@ -45,7 +45,7 @@ const Short = (props) => {
     const dataString = JSON.stringify(shortPosition);
     const encodedData = window.btoa(dataString);
     await fetch(
-      `https://fndecider.azurewebsites.net/api/Short?method=AddShortPosition&data=${encodedData}`
+      `https://deciderse.netlify.app/.netlify/functions/short?method=AddShortPosition&data=${encodedData}`
     );
     SetNotification({
       message:'Shorted!',

@@ -7,7 +7,7 @@ const AVD = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await Axios.get('https://fndecider.azurewebsites.net/api/avd');
+      const result = await Axios.get('https://deciderse.netlify.app/.netlify/functions/avd');
       setData(result.data);
     };
     fetchData();

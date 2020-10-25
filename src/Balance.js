@@ -5,7 +5,7 @@ const Balance = () => {
   useEffect(() => {
     const getBalance = async () => {
       const BalanceRes = await await fetch(
-        `https://fndecider.azurewebsites.net/api/Short?method=GetBalance&date=${new Date().toISOString()}`
+        `https://deciderse.netlify.app/.netlify/functions/short?method=GetBalance&date=${new Date().toISOString()}`
       );
       const liveBalance = await BalanceRes.json();
       SetBalance(liveBalance);

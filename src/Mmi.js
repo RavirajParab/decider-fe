@@ -8,7 +8,7 @@ const MMI = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await Axios.get(
-        "https://fndecider.azurewebsites.net/api/mmi"
+        "https://deciderse.netlify.app/.netlify/functions/mmi"
       );
       setData(result.data);
     };

@@ -7,7 +7,7 @@ const Performance = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await Axios.get(
-        "https://fndecider.azurewebsites.net/api/niftyhundred"
+        "https://deciderse.netlify.app/.netlify/functions/niftyhundred"
       );
       const AllCosString = localStorage.getItem("allcos");
       const AllCos = JSON.parse(AllCosString);

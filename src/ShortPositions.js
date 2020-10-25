@@ -6,10 +6,10 @@ const ShortPositions = (props) => {
   const [TotalPL, SetTotalPL]=useState(0);
   useEffect(()=>{
     const getShortPositions=async ()=>{
-        const shortPositionsRes = await fetch(`https://fndecider.azurewebsites.net/api/Short?method=GetShortPositions&date=${new Date().toISOString()}`);
+        const shortPositionsRes = await fetch(`https://deciderse.netlify.app/.netlify/functions/short?method=GetShortPositions&date=${new Date().toISOString()}`);
         const shortPositions = await shortPositionsRes.json();
         const SIDs=shortPositions.map(i=>i.SID).join(',');
-        const LiveQuotesRes = await fetch(`https://fndecider.azurewebsites.net/api/Quotes?sid=${SIDs}&date=${new Date().toISOString()}`);
+        const LiveQuotesRes = await fetch(`https://deciderse.netlify.app/.netlify/functions/quotes?sid=${SIDs}&date=${new Date().toISOString()}`);
         const LiveData = await LiveQuotesRes.json();
         const NewShortPositions = LiveData.map((i,index)=>{
           return {...shortPositions[index],
@@ -30,7 +30,7 @@ const ShortPositions = (props) => {
   //change PL
   const evaluatePL=async ()=>{
     const SIDs=ShortPositions.map(i=>i.SID).join(',');
-    const LiveQuotesRes = await fetch(`https://fndecider.azurewebsites.net/api/Quotes?sid=${SIDs}&date=${new Date().toISOString()}`);
+    const LiveQuotesRes = await fetch(`https://deciderse.netlify.app/.netlify/functions/quotes?sid=${SIDs}&date=${new Date().toISOString()}`);
     const LiveData = await LiveQuotesRes.json();
     const NewShortPositions = LiveData.map((i,index)=>{
       return {...ShortPositions[index],
@@ -53,7 +53,7 @@ const ShortPositions = (props) => {
     console.log(coverShort);
     const dataString= JSON.stringify(coverShort);
     const encodedData= window.btoa(dataString);
-    await fetch(`https://fndecider.azurewebsites.net/api/Short?method=CoverShortPosition&data=${encodedData}`);
+    await fetch(`https://deciderse.netlify.app/.netlify/functions/short?method=CoverShortPosition&data=${encodedData}`);
     //remove the entry from short positions
     const copy_ShortPositions=[...ShortPositions].filter(i=>i.Symbol!==security.Symbol);
     SetShortPositions(copy_ShortPositions);
