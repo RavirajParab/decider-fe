@@ -14,6 +14,8 @@ import ShortCandidate from "./ShortCandidate";
 import Performance from "./Performance";
 import Transact from "./Transact";
 import DeliveryPositions from "./DeliveryPositions";
+import TickerLoader from "./TickerLoader";
+import Ticker from "./Ticker";
 
 const Navigation = () => {
   return (
@@ -70,6 +72,12 @@ const Navigation = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/transact">
                 Transact
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link className="nav-link" to="/ticker">
+                Ticker
               </Link>
             </li>
 
@@ -156,10 +164,16 @@ const Navigation = () => {
 
         <Route path="/balance">
           <Balance />
+          <hr/>
+          <TickerLoader/>
         </Route>
 
         <Route path="/fell">
          <FellToday/>
+        </Route>
+
+        <Route path="/ticker">
+         <Ticker/>
         </Route>
 
         <Route path="/">
