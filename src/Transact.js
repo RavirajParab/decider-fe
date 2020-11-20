@@ -11,8 +11,6 @@ const Transact = (props) => {
   const [SecurityCurrent, SetSecurityCurrent] = useState({});
 
   const [Qty, SetQty] = useState(100);
-  const [CompanyNames, ] = useState([]);
-  const [NoSIDsCompanies, SetNoSIDsCompanies] = useState([]);
 
   const securitySelected = async (e) => {
     const selectedSecurity = e.target.value;
@@ -79,10 +77,27 @@ const Transact = (props) => {
 
   const showCompaniesWithNoSIDs = (e) => {
     e.preventDefault();
-    const NoSIDCompanies = CompanyNames.filter(
-      (i) => FullSecurityData.findIndex((j) => j.Symbol === i) === -1
+    const CompaniesMissingInDataJS=[]; 
+    const CompaniesMissingSIDsInDataJS=[]; 
+    AllCos.forEach(i => {
+       const sec= FullSecurityData.find(j => j.Symbol === i.Symbol);
+       if(sec==undefined){
+        CompaniesMissingInDataJS.push(i.Symbol);
+       }
+       else{
+        if(!sec.sid){
+          CompaniesMissingSIDsInDataJS.push(sec);
+        }
+       }
+      }
     );
-    SetNoSIDsCompanies(NoSIDCompanies);
+    console.log('Companies missing in Data.js :');
+    console.log(CompaniesMissingInDataJS);
+    console.log('Companies missing SIDs in Data.js :');
+    console.log(CompaniesMissingSIDsInDataJS);
+   // console.log(NoSIDCompanies);
+   // SetNoSIDsCompanies(NoSIDCompanies);
+  
   };
 
   return (
@@ -140,19 +155,12 @@ const Transact = (props) => {
           onClick={showCompaniesWithNoSIDs}
           className="btn btn-info mt-5"
         >
-          Show New CompanyNames
+          Show New CompanyNames/Missing SIDs
         </button>
       </form>
       <hr />
       <div>
-        <h3>Companies with NO SIDs</h3>
-        <hr />
-        <ul>
-          {NoSIDsCompanies.map((i, index) => (
-            <li key={index}>{i}</li>
-          ))}
-        </ul>
-        <p>{NoSIDsCompanies.length === 0 ? "All SIDs available" : null}</p>
+        <h6>Companies with NO SIDs or companies missing in Data.js check console log using F12 after hitting above button</h6>
       </div>
       <Notifier data={Notification}/>
     </React.Fragment>

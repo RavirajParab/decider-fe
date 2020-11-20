@@ -15,6 +15,7 @@ const ShortCandidate = (props) => {
         const company = AllCosSortedData.find(n=>n.Symbol==m);
         return company;
       }).sort((a,b)=>a.Change-b.Change)
+      .filter(m=>m!=undefined);
       SetAllCosSorted(filteredCompanies);
     };
     fetchData();

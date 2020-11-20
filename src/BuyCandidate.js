@@ -1,14 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Axios from 'axios';
 
-const FellToday = (props) => {
-  const AllCosString = localStorage.getItem("allcos");
-  const AllCos = JSON.parse(AllCosString);
-  const AllCosSorted= AllCos.filter(i=>i.Change<0)
-                            .sort((a,b)=>a.Change-b.Change);
+const BuyCandidate = (props) => {
+  const [AllCosSorted, SetAllCosSorted] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await Axios.get(
+        "https://deciderse.netlify.app/.netlify/functions/buying"
+      );
+      const shortingData = result.data.map(i=>i.Symbol);
+      const AllCosString = localStorage.getItem("allcos");
+      const AllCosSortedData = JSON.parse(AllCosString);
+      const filteredCompanies = shortingData.map(m=>{
+        const company = AllCosSortedData.find(n=>n.Symbol==m);
+        return company;
+      }).sort((a,b)=>b.Change-a.Change)
+      .filter(m=>m!=undefined);
+      SetAllCosSorted(filteredCompanies);
+    };
+    fetchData();
+  }, []);
+  
+                            
   
   return (
     <div>
-          <table className="table table-striped">
+           <table className="table table-striped">
             <thead>
               <tr>
                 <th scope="col">Name</th>
@@ -43,4 +60,4 @@ const FellToday = (props) => {
   );
 };
 
-export default FellToday;
+export default BuyCandidate;

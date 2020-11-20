@@ -474,6 +474,29 @@ const data=[
       "sid": "BION"
     },
     {
+      "Rank": 79.4,
+      "Symbol": "SBICARD",
+      "Security Name": "SBI Cards and Payment Services Ltd.",
+      "sid": "SBIC"
+    },
+    {
+      "Rank": 79.5,
+      "Symbol": "ABBOTINDIA",
+      "Security Name": "Abbot India Ltd",
+      "sid": "ABOT"
+    },{
+      "Rank": 79.6,
+      "Symbol": "IRCTC",
+      "Security Name": "Indian Railway Catering and Tourism Corporation Ltd",
+      "sid": "INIR"
+    },
+    {
+      "Rank": 79.7,
+      "Symbol": "POLYCAB",
+      "Security Name": "Polycab India Ltd",
+      "sid": "POLC"
+    },
+    {
       "Rank": 80,
       "Symbol": "PNB",
       "Security Name": "PUNJAB NATIONAL BANK",
@@ -813,7 +836,7 @@ const data=[
       "Rank": 136,
       "Symbol": "TATAPOWER",
       "Security Name": "TATA POWER CO LTD",
-      "sid": ""
+      "sid": "TTPW"
     },
     {
       "Rank": 137,
@@ -1898,7 +1921,7 @@ const data=[
       "Rank": 313,
       "Symbol": "ADANIGREEN",
       "Security Name": "ADANI GREEN ENERGY LTD",
-      "sid": ""
+      "sid": "ADNA"
     },
     {
       "Rank": 314,
@@ -2456,7 +2479,7 @@ const data=[
       "Rank": 406,
       "Symbol": "NAVINFLUOR",
       "Security Name": "NAVIN FLUORINE INT. LTD",
-      "sid": ""
+      "sid": "NAFL"
     },
     {
       "Rank": 407,

@@ -26,7 +26,13 @@ const Balance = () => {
   };
 
   const resetBalance =async ()=>{
-    console.log('Functionality to be implemented');
+    await fetch(
+      `https://deciderse.netlify.app/.netlify/functions/trade?method=ResetBalance`
+    );
+    SetNotification({
+      message:'Balance Reset!',
+      type:'success'
+    });
   }
   
   const resetShortPositions =async ()=>{

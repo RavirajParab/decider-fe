@@ -9,12 +9,12 @@ import FourteenDaysPerformance from "./FourteenDaysPerformance";
 import Etf from "./Etf";
 import ShortPositions from "./ShortPositions";
 import Balance from "./Balance";
-//import FellToday from "./FellToday";
+import FellToday from "./FellToday";
 import ShortCandidate from "./ShortCandidate";
+import BuyCandidate from "./BuyCandidate";
 import Performance from "./Performance";
 import Transact from "./Transact";
 import DeliveryPositions from "./DeliveryPositions";
-import TickerLoader from "./TickerLoader";
 import Ticker from "./Ticker";
 
 const Navigation = () => {
@@ -42,11 +42,11 @@ const Navigation = () => {
                 Overbought
               </Link>
             </li> */}
-            {/* <li className="nav-item">
+           <li className="nav-item">
               <Link className="nav-link" to="/fell">
-                Falling
+                Fell Today
               </Link>
-            </li> */}
+            </li>
             <li className="nav-item">
               <Link className="nav-link" to="/perf">
                 Performance
@@ -87,6 +87,8 @@ const Navigation = () => {
               </Link>
             </li>
 
+          
+
             <li className="nav-item">
               <Link className="nav-link" to="/deliverypositions">
                 Delivery Positions
@@ -96,6 +98,12 @@ const Navigation = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/sc">
                 Short Candidate
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link className="nav-link" to="/bc">
+                Buy Candidate
               </Link>
             </li>
 
@@ -133,6 +141,12 @@ const Navigation = () => {
           <ShortCandidate/>
         </Route>
 
+        <Route path="/bc">
+          <MMI />
+          <AVD />
+          <BuyCandidate/>
+        </Route>
+
         <Route path="/transact">
           <Transact />
         </Route>
@@ -166,9 +180,9 @@ const Navigation = () => {
           <Balance />
         </Route>
 
-        {/* <Route path="/fell">
+         <Route path="/fell">
          <FellToday/>
-        </Route> */}
+        </Route> 
 
         <Route path="/ticker">
          <Ticker/>
