@@ -5,11 +5,11 @@ import MMI from "./Mmi";
 import AVD from "./Avd";
 import FiveDaysPerformance from "./FiveDaysPerformance";
 import FourteenDaysPerformance from "./FourteenDaysPerformance";
-import RSIOverbought from "./RSIOverbought";
+//import RSIOverbought from "./RSIOverbought";
 import Etf from "./Etf";
 import ShortPositions from "./ShortPositions";
 import Balance from "./Balance";
-import FellToday from "./FellToday";
+//import FellToday from "./FellToday";
 import ShortCandidate from "./ShortCandidate";
 import Performance from "./Performance";
 import Transact from "./Transact";
@@ -37,16 +37,16 @@ const Navigation = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarText">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/overbought">
                 Overbought
               </Link>
-            </li>
-            <li className="nav-item">
+            </li> */}
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/fell">
                 Falling
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
               <Link className="nav-link" to="/perf">
                 Performance
@@ -120,12 +120,12 @@ const Navigation = () => {
           <AVD />
           <FourteenDaysPerformance />
         </Route>
-
+{/* 
         <Route path="/overbought">
           <MMI />
           <AVD />
           <RSIOverbought />
-        </Route>
+        </Route> */}
 
         <Route path="/sc">
           <MMI />
@@ -164,13 +164,11 @@ const Navigation = () => {
 
         <Route path="/balance">
           <Balance />
-          <hr/>
-          <TickerLoader/>
         </Route>
 
-        <Route path="/fell">
+        {/* <Route path="/fell">
          <FellToday/>
-        </Route>
+        </Route> */}
 
         <Route path="/ticker">
          <Ticker/>

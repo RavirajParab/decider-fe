@@ -24,6 +24,10 @@ const Balance = () => {
       type:'success'
     });
   };
+
+  const resetBalance =async ()=>{
+    console.log('Functionality to be implemented');
+  }
   
   const resetShortPositions =async ()=>{
     await fetch(
@@ -42,6 +46,7 @@ const Balance = () => {
       <span className="h3 text-success">{Math.round(Balance)}</span> <br/>
       <button className="btn btn-info" onClick={resetShortPositions}> Reset Shorts</button>
       <button className="btn btn-success ml-3" onClick={resetDeliveryPositions}> Reset Delivery</button>
+      <button className="btn btn-warning ml-3" onClick={resetBalance}> Reset Balance</button>
       <br/>
         <Notifier style={{ 'display':'none'}} data={Notification}/>
     </React.Fragment>
