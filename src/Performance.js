@@ -13,27 +13,36 @@ const Performance = (props) => {
       const AllCos = JSON.parse(AllCosString);
       //set the filetered data for display
       const companies=result.data.map(i=>{
+        const cos= AllCos.find(m=>m.Symbol===i.symbol);
         return {
           ...i,
-          rsi: AllCos.find(m=>m.Symbol===i.symbol).RSI
+          rsi: cos.RSI,
+          change5: cos.Change5,
+          change14: cos.Change14
         }
       });
      
       const rsiData = companies
         .sort((a, b) => a.monthlyPercentageChange - b.monthlyPercentageChange);
+       // console.log(rsiData);
       setData(rsiData);
     };
     fetchData();
   }, []);
 
   //monthly button clicked
-  const monthMode=(flag)=>{
+  const Mode=(flag)=>{
     let reArrangedCos=[];
-    if(flag)
+    if(flag==='1Month')
      reArrangedCos = [...data].sort((a, b) => a.monthlyPercentageChange - b.monthlyPercentageChange);
-    else
+    else if(flag==='1Year')
     reArrangedCos = [...data].sort((a, b) => a.yearlyPercentageChange - b.yearlyPercentageChange);
-
+    else if(flag==='5Days')
+    reArrangedCos = [...data].sort((a, b) => a.change5 - b.change5);
+    else if(flag==='14Days')
+    reArrangedCos = [...data].sort((a, b) => a.change14 - b.change14);
+    else if(flag==='RSI')
+    reArrangedCos = [...data].sort((a, b) => a.rsi - b.rsi);
     setData(reArrangedCos);
   }
 
@@ -44,16 +53,21 @@ const Performance = (props) => {
         <Loading />
       ) : (
           <div>
-            <button className="btn btn-warning" onClick={monthMode.bind(this,true)}>Monthly</button> 
-            <button className="btn btn-info ml-2" onClick={monthMode.bind(this,false)}>Yearly</button>
+            <button className="btn btn-info" onClick={Mode.bind(this,'5Days')}>5 Days</button>
+            <button className="btn btn-info ml-2" onClick={Mode.bind(this,'14Days')}>14 Days</button>
+            <button className="btn btn-info ml-2" onClick={Mode.bind(this,'1Month')}>Monthly</button> 
+            <button className="btn btn-info ml-2" onClick={Mode.bind(this,'1Year')}>Yearly</button>
+            <button className="btn btn-info ml-2" onClick={Mode.bind(this,'RSI')}>RSI</button>
             {" "}
             <table className="table table-striped">
               <thead>
                 <tr>
                   <th scope="col">Name</th>
                   <th scope="col">RSI</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Change</th>
+                  <th scope="col">5Days</th>
+                  <th scope="col">14Days</th>
+                  <th scope="col">1Month</th>
+                  <th scope="col">1Year</th>
                 </tr>
               </thead>
               <tbody>
@@ -68,19 +82,14 @@ const Performance = (props) => {
                           i.symbol
                         }
                       >
-                        <span style={{ color: i.monthlyNetChange < 0 ? 'Red' : 'Green' }}>{i.symbol}</span>
+                        <span style={{ color: i.percentChange < 0 ? 'Red' : 'Green' }}>{i.symbol}</span>
                       </a>{" "}<br/>
-                      <span className="btn btn-primary">
-                        MR <span className="badge badge-light">{i.monthlyPercentageChange}</span>
-                      </span>
-                      <span className="btn btn-success ml-2">
-                        YR <span className="badge badge-light">{i.yearlyPercentageChange}</span>
-                      </span>
                     </td>
                     <td>{i.rsi}</td>
-                    <td>{i.lastTradedPrice}</td>
-                    <td>{i.percentChange}</td>
-
+                      <td>{i.change5}</td>
+                    <td>{i.change14}</td>
+                    <td>{i.monthlyPercentageChange}</td>
+                    <td>{i.yearlyPercentageChange}</td>
                   </tr>
                 ))}
               </tbody>

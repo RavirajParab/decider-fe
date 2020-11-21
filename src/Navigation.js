@@ -3,9 +3,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import RSIOversold from "./RSIOversold";
 import MMI from "./Mmi";
 import AVD from "./Avd";
-import FiveDaysPerformance from "./FiveDaysPerformance";
-import FourteenDaysPerformance from "./FourteenDaysPerformance";
-//import RSIOverbought from "./RSIOverbought";
 import Etf from "./Etf";
 import ShortPositions from "./ShortPositions";
 import Balance from "./Balance";
@@ -16,6 +13,7 @@ import Performance from "./Performance";
 import Transact from "./Transact";
 import DeliveryPositions from "./DeliveryPositions";
 import Ticker from "./Ticker";
+import Indices from "./Indices";
 
 const Navigation = () => {
   return (
@@ -37,11 +35,11 @@ const Navigation = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarText">
           <ul className="navbar-nav mr-auto">
-            {/* <li className="nav-item">
-              <Link className="nav-link" to="/overbought">
-                Overbought
+             <li className="nav-item">
+              <Link className="nav-link" to="/indices">
+                Indices
               </Link>
-            </li> */}
+            </li> 
            <li className="nav-item">
               <Link className="nav-link" to="/fell">
                 Fell Today
@@ -50,16 +48,6 @@ const Navigation = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/perf">
                 Performance
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/five">
-                5 Days
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/fourteen">
-                14 Days
               </Link>
             </li>
 
@@ -117,24 +105,6 @@ const Navigation = () => {
       </nav>
 
       <Switch>
-        <Route path="/five">
-          <MMI />
-          <AVD />
-          <FiveDaysPerformance />
-        </Route>
-
-        <Route path="/fourteen">
-          <MMI />
-          <AVD />
-          <FourteenDaysPerformance />
-        </Route>
-{/* 
-        <Route path="/overbought">
-          <MMI />
-          <AVD />
-          <RSIOverbought />
-        </Route> */}
-
         <Route path="/sc">
           <MMI />
           <AVD />
@@ -169,6 +139,12 @@ const Navigation = () => {
           <ShortPositions />
         </Route>
 
+        <Route path="/indices">
+          <MMI />
+          <AVD />
+          <Indices />
+        </Route>
+
         
         <Route path="/deliverypositions">
           <MMI />
@@ -181,6 +157,8 @@ const Navigation = () => {
         </Route>
 
          <Route path="/fell">
+         <MMI />
+          <AVD />
          <FellToday/>
         </Route> 
 

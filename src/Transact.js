@@ -81,7 +81,7 @@ const Transact = (props) => {
     const CompaniesMissingSIDsInDataJS=[]; 
     AllCos.forEach(i => {
        const sec= FullSecurityData.find(j => j.Symbol === i.Symbol);
-       if(sec==undefined){
+       if(sec===undefined){
         CompaniesMissingInDataJS.push(i.Symbol);
        }
        else{

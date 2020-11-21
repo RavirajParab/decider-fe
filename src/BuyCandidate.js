@@ -12,10 +12,10 @@ const BuyCandidate = (props) => {
       const AllCosString = localStorage.getItem("allcos");
       const AllCosSortedData = JSON.parse(AllCosString);
       const filteredCompanies = shortingData.map(m=>{
-        const company = AllCosSortedData.find(n=>n.Symbol==m);
+        const company = AllCosSortedData.find(n=>n.Symbol===m);
         return company;
       }).sort((a,b)=>b.Change-a.Change)
-      .filter(m=>m!=undefined);
+      .filter(m=>m!==undefined);
       SetAllCosSorted(filteredCompanies);
     };
     fetchData();
