@@ -24,7 +24,6 @@ const Performance = (props) => {
      
       const rsiData = companies
         .sort((a, b) => a.monthlyPercentageChange - b.monthlyPercentageChange);
-       // console.log(rsiData);
       setData(rsiData);
     };
     fetchData();

@@ -4,12 +4,37 @@ import Loading from "./Loading";
 
 const Etf = (props) => {
   const [data, setData] = useState([]);
+  //fetch RSI function
+  const getRSI=(analysis)=>{
+    const rsiString= analysis.split('. A')[0].split('is ')[1];
+    return Number(rsiString);
+  }
+
+  //monthly button clicked
+  const Mode=(flag)=>{
+    let reArrangedCos=[];
+    if(flag==='1Month')
+     reArrangedCos = [...data].sort((a, b) => a.mrt - b.mrt);
+    else if(flag==='Rise')
+    reArrangedCos = [...data].sort((a, b) => a.rise - b.rise);
+    else if(flag==='RSI')
+    reArrangedCos = [...data].sort((a, b) => a.rsi - b.rsi);
+    console.log(reArrangedCos)
+    setData(reArrangedCos);
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await Axios.get(
         "https://deciderse.netlify.app/.netlify/functions/ETF"
       );
       const rsiData = result.data
+        .map(y=>{
+          return {
+            ...y,
+            rsi : getRSI(y.rsi)
+          }
+        })
         .sort((a, b) => a.rsi - b.rsi);
       setData(rsiData);
     };
@@ -21,12 +46,16 @@ const Etf = (props) => {
         <Loading />
       ) : (
           <div>
-            {" "}
+            <button className="btn btn-info ml-2" onClick={Mode.bind(this,'1Month')}>Monthly</button> 
+            <button className="btn btn-info ml-2" onClick={Mode.bind(this,'Rise')}>Rise</button>
+            <button className="btn btn-info ml-2" onClick={Mode.bind(this,'RSI')}>RSI</button>
             <table className="table table-striped">
               <thead>
                 <tr>
                   <th scope="col">Name</th>
                   <th scope="col">RSI</th>
+                  <th scope="col">Rise</th>
+                  <th scope="col">1Month</th>
                   <th scope="col">Price</th>
                   <th scope="col">Change</th>
                 </tr>
@@ -45,15 +74,10 @@ const Etf = (props) => {
                       >
                         <span style={{ color: i.change < 0 ? 'Red' : 'Green' }}>{i.ticker}</span>
                       </a>{" "}<br/>
-                      <span className="btn btn-primary">
-                        MR <span className="badge badge-light">{i.mrt}</span>
-                      </span>
-                      <span className="btn btn-success ml-2">
-                        YR <span className="badge badge-light">{i.yrt}</span>
-                      </span>
-                    
                     </td>
                     <td>{i.rsi}</td>
+                    <td>{i.rise}</td>
+                    <td>{i.mrt}</td>
                     <td>{i.price}</td>
                     <td>{i.change}</td>
 

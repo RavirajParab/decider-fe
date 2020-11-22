@@ -14,6 +14,7 @@ import Transact from "./Transact";
 import DeliveryPositions from "./DeliveryPositions";
 import Ticker from "./Ticker";
 import Indices from "./Indices";
+import GlobalIndices from "./GlobalIndices";
 
 const Navigation = () => {
   return (
@@ -38,6 +39,11 @@ const Navigation = () => {
              <li className="nav-item">
               <Link className="nav-link" to="/indices">
                 Indices
+              </Link>
+            </li> 
+            <li className="nav-item">
+              <Link className="nav-link" to="/gi">
+              GlobalIndices
               </Link>
             </li> 
            <li className="nav-item">
@@ -115,6 +121,12 @@ const Navigation = () => {
           <MMI />
           <AVD />
           <BuyCandidate/>
+        </Route>
+
+        <Route path="/gi">
+          <MMI />
+          <AVD />
+          <GlobalIndices/>
         </Route>
 
         <Route path="/transact">
