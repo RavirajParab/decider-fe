@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import Loading from "./Loading";
+import {Indication} from "./Indication";
+import {RSIIndication} from "./Indication";
 
 const RSIOversold = (props) => {
   const [data, setData] = useState([]);
@@ -18,7 +20,7 @@ const RSIOversold = (props) => {
       //set the data in the local storage
       localStorage.setItem('allcos',JSON.stringify(rsiData));
       //set the filetered data for display
-      const rsiFiltered =rsiData.filter(i=>i.RSI<36);
+      const rsiFiltered =rsiData.filter(i=>i.RSI<40);
       setData(rsiFiltered);
     };
     fetchData();
@@ -55,9 +57,9 @@ const RSIOversold = (props) => {
                      <span style={{color:i.YesterdayChange<0?'Red':'Green'}}>{i.Symbol}</span>
                     </a>{" "}
                   </td>
-                  <td>{i.RSI}</td>
+                  <td><RSIIndication data={i.RSI} /></td>
                   <td>{(Number(i.Close)).toFixed(2)}</td>
-                  <td>{i.Change}</td>
+                  <td><Indication data={i.Change} /></td>
                 </tr>
               ))}
             </tbody>

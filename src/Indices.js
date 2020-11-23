@@ -79,7 +79,7 @@ const Indices = (props) => {
                                         <table className="table table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">#</th>
+                                                    {/* <th scope="col">#</th> */}
                                                     <th scope="col">Symbol</th>                                                  
                                                     <th scope="col">Change</th>
                                                     <th scope="col">RSI</th>
@@ -89,7 +89,7 @@ const Indices = (props) => {
                                             <tbody>
                                                 {
                                                     info.Companies.map((coinfo, idxx) => <tr key={idxx}>
-                                                        <th scope="row">{idxx + 1}</th>
+                                                        {/* <th scope="row">{idxx + 1}</th> */}
                                                         <td><a
                                                             target="_blank"
                                                             rel="noopener noreferrer"

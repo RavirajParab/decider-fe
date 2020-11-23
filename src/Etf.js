@@ -79,7 +79,7 @@ const Etf = (props) => {
                     </td>
                     
                     <td><RSIIndication data={i.rsi} /></td>
-                    <td>{i.rise}</td>
+                    <td><Indication data={i.rise} /></td>
                     <td><Indication data={i.mrt} /></td>
                     <td>{i.price}</td>
                     <td><Indication data={i.change} /></td>

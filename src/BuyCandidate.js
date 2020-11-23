@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from 'axios';
+import {Indication} from "./Indication";
+import {RSIIndication} from "./Indication";
 
 const BuyCandidate = (props) => {
   const [AllCosSorted, SetAllCosSorted] = useState([]);
@@ -49,9 +51,9 @@ const BuyCandidate = (props) => {
                      <span style={{color:i.YesterdayChange<0?'Red':'Green'}}>{i.Symbol}</span>
                     </a>{" "}
                   </td>
-                  <td>{i.RSI}</td>
+                  <td><RSIIndication data={i.RSI} /></td>
                   <td>{(Number(i.Close)).toFixed(2)}</td>
-                  <td>{i.Change}</td>
+                  <td><Indication data={i.Change} /></td>
                 </tr>
               ))}
             </tbody>

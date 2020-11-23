@@ -1,4 +1,6 @@
 import React from "react";
+import {Indication} from "./Indication";
+import {RSIIndication} from "./Indication";
 
 const FellToday = (props) => {
   const AllCosString = localStorage.getItem("allcos");
@@ -32,9 +34,9 @@ const FellToday = (props) => {
                      <span style={{color:i.YesterdayChange<0?'Red':'Green'}}>{i.Symbol}</span>
                     </a>{" "}
                   </td>
-                  <td>{i.RSI}</td>
+                  <td><RSIIndication data={i.RSI} /></td>
                   <td>{(Number(i.Close)).toFixed(2)}</td>
-                  <td>{i.Change}</td>
+                  <td><Indication data={i.Change} /></td>
                 </tr>
               ))}
             </tbody>

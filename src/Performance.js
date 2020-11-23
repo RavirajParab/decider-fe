@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Axios from 'axios';
 import Loading from "./Loading";
+import {Indication} from "./Indication";
+import {RSIIndication} from "./Indication";
 
 const Performance = (props) => {
   const [data, setData] = useState([]);
@@ -84,11 +86,11 @@ const Performance = (props) => {
                         <span style={{ color: i.percentChange < 0 ? 'Red' : 'Green' }}>{i.symbol}</span>
                       </a>{" "}<br/>
                     </td>
-                    <td>{i.rsi}</td>
-                      <td>{i.change5}</td>
-                    <td>{i.change14}</td>
-                    <td>{i.monthlyPercentageChange}</td>
-                    <td>{i.yearlyPercentageChange}</td>
+                    <td><RSIIndication data={i.rsi} /></td>
+                    <td><Indication data={i.change5} /></td>
+                    <td><Indication data={i.change14} /></td>
+                    <td><Indication data={i.monthlyPercentageChange} /></td>
+                    <td><Indication data={i.yearlyPercentageChange} /></td>
                   </tr>
                 ))}
               </tbody>
