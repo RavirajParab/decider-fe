@@ -127,6 +127,12 @@ const Transact = (props) => {
           <br />
           <label className="h5 text-success">Low : {SecurityCurrent.l}</label>
           <br />
+          <label className="h5 text-dark"> 1 LAC INR QTY : {(100000/SecurityCurrent.price).toFixed(0)}</label>
+          <br />
+          <label className="h5 text-info"> 1% UP SL : {(1.01*SecurityCurrent.price).toFixed(0)}</label>
+          <br />
+          <label className="h5 text-danger"> 1% DOWN SL : {(0.99*SecurityCurrent.price).toFixed(0)}</label>
+          <br />
         </div>
         <div className="form-group">
           <label htmlFor="qty">Enter Qty</label>

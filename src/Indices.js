@@ -23,9 +23,9 @@ const Indices = (props) => {
                 const companies_copy=x.Companies.map(n=>{
                     const co= AllCos.filter(t=>t.Symbol===n.Symbol);
                     if(co.length){
-                        return {...n,RSI:co[0].RSI}
+                        return {...n,RSI:co[0].RSI,Change:co[0].Change}
                     }else{
-                        return {...n,RSI:'NA'}
+                        return {...n,RSI:'NA',Change:0}
                     } 
                 });
                 return {...x,Companies:companies_copy}
@@ -80,9 +80,10 @@ const Indices = (props) => {
                                             <thead>
                                                 <tr>
                                                     <th scope="col">#</th>
-                                                    <th scope="col">Symbol</th>
-                                                    <th scope="col">Rise</th>
+                                                    <th scope="col">Symbol</th>                                                  
+                                                    <th scope="col">Change</th>
                                                     <th scope="col">RSI</th>
+                                                    <th scope="col">Rise</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -97,10 +98,12 @@ const Indices = (props) => {
                                                                 coinfo.Symbol
                                                             }
                                                         >
-                                                            <span>{coinfo.Symbol}</span>
+                                                            <span style={{color:coinfo.Change<0?'red':'green'}}>{coinfo.Symbol}</span>
+                                                            
                                                         </a></td>
-                                                        <td><Indication data={coinfo.Rise} /></td>
+                                                        <td><Indication data={coinfo.Change} /></td>
                                                         <td><RSIIndication data={coinfo.RSI} /></td>
+                                                        <td><Indication data={coinfo.Rise} /></td>
                                                     </tr>)
                                                 }
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from 'axios';
 import Loading from "./Loading";
-import {Indication} from "./Indication";
 
 
 const GlobalIndices = (props) => {
@@ -32,10 +31,11 @@ const GlobalIndices = (props) => {
                                             </thead>
                                             <tbody>
                                                 {
-                                                    data.map((i, idx) => <tr key={idx}>
+                                                    data.map((i, idx) => <tr style={{color:i.Change<0?'red':'green'}}
+                                                        key={idx}>
                                                         <th scope="row">{idx + 1}</th>
                                                         <td>{i.Index}</td>
-                                                        <td><Indication data={i.Change} /></td>
+                                                        <td>{i.Change}</td>
                                                         <td>{i.Region}</td>
                                                     </tr>)
                                                 }

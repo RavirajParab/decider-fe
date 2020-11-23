@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Axios from 'axios';
 import Loading from "./Loading";
+import {Indication} from "./Indication";
+import {RSIIndication} from "./Indication";
 
 const Etf = (props) => {
   const [data, setData] = useState([]);
@@ -75,11 +77,14 @@ const Etf = (props) => {
                         <span style={{ color: i.change < 0 ? 'Red' : 'Green' }}>{i.ticker}</span>
                       </a>{" "}<br/>
                     </td>
-                    <td>{i.rsi}</td>
+                    
+                    <td><RSIIndication data={i.rsi} /></td>
                     <td>{i.rise}</td>
-                    <td>{i.mrt}</td>
+                    <td><Indication data={i.mrt} /></td>
                     <td>{i.price}</td>
-                    <td>{i.change}</td>
+                    <td><Indication data={i.change} /></td>
+                    
+                    
 
                   </tr>
                 ))}
