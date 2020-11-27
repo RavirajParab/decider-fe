@@ -5,6 +5,17 @@ import {RSIIndication} from "./Indication";
 
 const BuyCandidate = (props) => {
   const [AllCosSorted, SetAllCosSorted] = useState([]);
+
+  const Mode=(flag)=>{
+    let reArrangedCos=[];
+    if(flag==='RSI')
+    reArrangedCos = [...AllCosSorted].sort((a, b) => a.RSI - b.RSI);
+    else if(flag==='DRSI')
+    reArrangedCos = [...AllCosSorted].sort((a, b) => a.drsi - b.drsi);
+    console.log(reArrangedCos);
+    SetAllCosSorted(reArrangedCos);
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await Axios.get(
@@ -17,8 +28,15 @@ const BuyCandidate = (props) => {
         const company = AllCosSortedData.find(n=>n.Symbol===m);
         return company;
       }).sort((a,b)=>b.Change-a.Change)
-      .filter(m=>m!==undefined);
-      SetAllCosSorted(filteredCompanies);
+      .filter(m=>m!==undefined).map(async x=>{
+        const lrsiProm = await Axios.get(
+          `https://deciderse.netlify.app/.netlify/functions/liversi?sid=${x.sid}`
+        );
+        return {...x, drsi:lrsiProm.data.RSI}; 
+      });
+      const filteredCompaniesData = await Promise.all(filteredCompanies);
+      console.log(filteredCompaniesData);
+      SetAllCosSorted(filteredCompaniesData);
     };
     fetchData();
   }, []);
@@ -27,11 +45,14 @@ const BuyCandidate = (props) => {
   
   return (
     <div>
+      <button className="btn btn-info" onClick={Mode.bind(this,'RSI')}>RSI</button>
+          <button className="btn btn-info ml-2" onClick={Mode.bind(this,'DRSI')}>DRSI</button>
            <table className="table table-striped">
             <thead>
               <tr>
                 <th scope="col">Name</th>
                 <th scope="col">RSI</th>
+                <th scope="col">DRSI</th>
                 <th scope="col">Price</th>
                 <th scope="col">Change</th>
               </tr>
@@ -52,6 +73,7 @@ const BuyCandidate = (props) => {
                     </a>{" "}
                   </td>
                   <td><RSIIndication data={i.RSI} /></td>
+                  <td><RSIIndication data={i.drsi} /></td>
                   <td>{(Number(i.Close)).toFixed(2)}</td>
                   <td><Indication data={i.Change} /></td>
                 </tr>

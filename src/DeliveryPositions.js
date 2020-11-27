@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+import {RSIIndication} from "./Indication";
+
 
 const DeliveryPositions = (props) => {
- 
+  const AllCosString = localStorage.getItem("allcos");
+  const AllCos = JSON.parse(AllCosString);
+
   const [DeliveryPositions, SetDeliveryPositions] = useState([]);
   const [TotalPL, SetTotalPL]=useState(0);
   useEffect(()=>{
@@ -12,15 +16,30 @@ const DeliveryPositions = (props) => {
         const LiveQuotesRes = await fetch(`https://deciderse.netlify.app/.netlify/functions/quotes?sid=${SIDs}&date=${new Date().toISOString()}`);
         const LiveData = await LiveQuotesRes.json();
         const NewDeliveryPositions = LiveData.map((i,index)=>{
+          console.log(i);
           return {...DeliveryPositions[index],
-                  mr:Number(((i.h-i.o)*100/i.o).toFixed(2)),
+                 // mr:Number(((i.h-i.o)*100/i.o).toFixed(2)),
+                  drsi:LiveData[index].drsi,
+                  RSI:(()=>{
+                   const thisCo= AllCos.find(d=>d.sid===i.sid);
+                   if(thisCo){
+                      if(thisCo.RSI){
+                        return thisCo.RSI;
+                      }else{
+                        return 'NA';
+                      }
+                   }else{
+                     return 'NA';
+                   }
+                   
+                  })(i),
                   cp:i.price,pl:Math.round((i.price-DeliveryPositions[index].Buy)*DeliveryPositions[index].Qty)}
         });
         let pl=0;
         NewDeliveryPositions.forEach(element => {
           pl+=element.pl;
         });
-        console.log(NewDeliveryPositions);
+      //  console.log(NewDeliveryPositions);
         SetTotalPL(pl);    
         SetDeliveryPositions(NewDeliveryPositions);
         }
@@ -34,15 +53,29 @@ const DeliveryPositions = (props) => {
     const LiveData = await LiveQuotesRes.json();
     const NewDeliveryPositions = LiveData.map((i,index)=>{
       return {...DeliveryPositions[index],
-              cp:i.price,pl:Math.round((i.price-DeliveryPositions[index].Buy)*DeliveryPositions[index].Qty)}
+               drsi:LiveData[index].drsi,
+               RSI:(()=>{
+                const thisCo= AllCos.find(d=>d.sid===i.sid);
+                if(thisCo){
+                   if(thisCo.RSI){
+                     return thisCo.RSI;
+                   }else{
+                     return 'NA';
+                   }
+                }else{
+                  return 'NA';
+                }
+               })(i),
+               cp:i.price,pl:Math.round((i.price-DeliveryPositions[index].Buy)*DeliveryPositions[index].Qty)}
     });
     let pl=0;
     NewDeliveryPositions.forEach(element => {
       pl+=element.pl;
     });
-    console.log(NewDeliveryPositions);
+    
     SetTotalPL(pl);    
     SetDeliveryPositions(NewDeliveryPositions);
+    console.log(NewDeliveryPositions);
   }
 
   const coverUp=async (security)=>{
@@ -69,7 +102,8 @@ const DeliveryPositions = (props) => {
       <thead>
         <tr>
           <th scope="col">Name</th>
-          <th scope="col">MR</th>
+          <th scope="col">RSI</th>
+          <th scope="col">DRSI</th>
           <th scope="col">BP</th>
           <th scope="col">CP</th>
           <th scope="col">PL</th>
@@ -92,7 +126,8 @@ const DeliveryPositions = (props) => {
               </a>{" "}
               <button className="btn btn-warning btn-sm" onClick={coverUp.bind(this,i)}>sq</button>
             </td>
-            <td>{i.mr}</td>
+            <td><RSIIndication data={i.RSI} /></td>
+            <td><RSIIndication data={i.drsi} /></td>
             <td>{i.Buy}</td>
               <td>{i.cp}</td>
               <td className={i.pl>0?'h5 text-success':'h5 text-danger'}>{i.pl}</td>

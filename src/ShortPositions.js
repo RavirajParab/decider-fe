@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {RSIIndication} from "./Indication";
 
 const ShortPositions = (props) => {
  
@@ -13,14 +14,15 @@ const ShortPositions = (props) => {
         const LiveData = await LiveQuotesRes.json();
         const NewShortPositions = LiveData.map((i,index)=>{
           return {...shortPositions[index],
-                  mr:Number(((i.h-i.o)*100/i.o).toFixed(2)),
+                 // mr:Number(((i.h-i.o)*100/i.o).toFixed(2)),
+                  drsi:LiveData[index].drsi,
                   cp:i.price,pl:Math.round((shortPositions[index].Buy-i.price)*shortPositions[index].Qty)}
         });
         let pl=0;
         NewShortPositions.forEach(element => {
           pl+=element.pl;
         });
-        console.log(NewShortPositions);
+       // console.log(NewShortPositions);
         SetTotalPL(pl);    
         SetShortPositions(NewShortPositions);
         }
@@ -34,6 +36,7 @@ const ShortPositions = (props) => {
     const LiveData = await LiveQuotesRes.json();
     const NewShortPositions = LiveData.map((i,index)=>{
       return {...ShortPositions[index],
+              drsi:LiveData[index].drsi,
               cp:i.price,pl:Math.round((ShortPositions[index].Buy-i.price)*ShortPositions[index].Qty)}
     });
     let pl=0;
@@ -69,7 +72,7 @@ const ShortPositions = (props) => {
       <thead>
         <tr>
           <th scope="col">Name</th>
-          <th scope="col">MR</th>
+          <th scope="col">DRSI</th>
           <th scope="col">BP</th>
           <th scope="col">CP</th>
           <th scope="col">PL</th>
@@ -79,7 +82,7 @@ const ShortPositions = (props) => {
         {ShortPositions.map((i, index) => (
           <tr key={index}>
             <td>
-              <a
+              <a  
                 target="_blank"
                 rel="noopener noreferrer"
                 href={
@@ -92,7 +95,7 @@ const ShortPositions = (props) => {
               </a>{" "}
               <button className="btn btn-warning btn-sm" onClick={coverUp.bind(this,i)}>sq</button>
             </td>
-            <td>{i.mr}</td>
+            <td><RSIIndication data={i.drsi} /></td>
             <td>{i.Buy}</td>
               <td>{i.cp}</td>
               <td className={i.pl>0?'h5 text-success':'h5 text-danger'}>{i.pl}</td>
