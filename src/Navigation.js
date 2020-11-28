@@ -16,7 +16,8 @@ import Ticker from "./Ticker";
 import Indices from "./Indices";
 import GlobalIndices from "./GlobalIndices";
 import DRSI from "./DRSI";
-import Forecasts from "./Forecasts";
+import Future from "./Future";
+
 
 const Navigation = () => {
   return (
@@ -40,17 +41,17 @@ const Navigation = () => {
           <ul className="navbar-nav mr-auto">
              <li className="nav-item">
               <Link className="nav-link" to="/indices">
-                Indices
+                Idx
               </Link>
             </li> 
             <li className="nav-item">
               <Link className="nav-link" to="/gi">
-              GlobalIndices
+              GIdx
               </Link>
             </li> 
            <li className="nav-item">
               <Link className="nav-link" to="/fell">
-                Fell Today
+                Fell
               </Link>
             </li>
             <li className="nav-item">
@@ -66,7 +67,7 @@ const Navigation = () => {
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link" to="/forecasts">
+              <Link className="nav-link" to="/future">
                 Forecast
               </Link>
             </li>
@@ -185,10 +186,10 @@ const Navigation = () => {
           <Balance />
         </Route>
 
-        <Route path="/forecast">
-          <Forecasts />
+        <Route path="/future">
+          <Future />
         </Route>
-        
+
          <Route path="/fell">
          <MMI />
           <AVD />
