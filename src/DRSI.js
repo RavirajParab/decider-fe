@@ -1,57 +1,61 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import Loading from "./Loading";
 import {Indication} from "./Indication";
 import {RSIIndication} from "./Indication";
-import LocalSIDData from "./data";
 
-const RSIOversold = (props) => {
+
+const DRSI = (props) => {
   const [data, setData] = useState([]);
+  const AllCosString = localStorage.getItem("allcos");
+  const AllCos = JSON.parse(AllCosString);
+
+  const Mode=(flag)=>{
+    let reArrangedCos=[];
+    if(flag==='RSI')
+    reArrangedCos = [...data].sort((a, b) => b.RSI - a.RSI);
+    else if(flag==='DRSI')
+    reArrangedCos = [...data].sort((a, b) => b.DRSI - a.DRSI);
+    setData(reArrangedCos);
+  }
+ 
   useEffect(() => {
     const fetchData = async () => {
       const result = await Axios.get(
-        "https://deciderse.netlify.app/.netlify/functions/topcompanies"
-      );
-      result.data.pop();  
+        "https://deciderse.netlify.app/.netlify/functions/topdrsi"
+      );  
      
-      
       const rsiData = result.data
-                            .filter(i=>i!==null)
                             .map(m=>{
-                              const co = LocalSIDData.filter(k=>k.Symbol===m.Symbol);
-                              let sidc='NA';
-                              if(co.length){
-                                 if(co[0]){
-                                   sidc =co[0].sid;
-                                 }
+                              const co = AllCos.filter(k=>k.sid===m.SID);
+                              if(co.length===0){
+                                console.log(`${m.SID} is missing; need to add it to Data.js`);
+                                co.Symbol='Missing';
                               }
-                              return {...m,sid:sidc}
+                              else{
+                                return {...co[0],DRSI:m.RSI}
+                              }
                             })
-                            .sort((a, b) => a.RSI - b.RSI);
-        
-      //set the data in the local storage
-      localStorage.setItem('allcos',JSON.stringify(rsiData));
-      //set the filetered data for display
-      const rsiFiltered =rsiData.filter(i=>i.RSI<40);
-      setData(rsiFiltered);
+                            .filter(i=>i!==undefined)
+                            .sort((a, b) => b.RSI - a.RSI);
+      console.log(rsiData); 
+      setData(rsiData);
     };
     fetchData();
   }, []);
-
+  
   return (
     <div>
-      {data.rsi ? (
-        <Loading />
-      ) : (
-        <div>
-          {" "}
+          <button className="btn btn-info" onClick={Mode.bind(this,'RSI')}>RSI</button>
+          <button className="btn btn-info ml-2" onClick={Mode.bind(this,'DRSI')}>DRSI</button>
           <table className="table table-striped">
             <thead>
               <tr>
                 <th scope="col">Name</th>
                 <th scope="col">RSI</th>
-                <th scope="col">Price</th>
+                <th scope="col">DRSI</th>
                 <th scope="col">Change</th>
+                <th scope="col">Price</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -70,16 +74,15 @@ const RSIOversold = (props) => {
                     </a>{" "}
                   </td>
                   <td><RSIIndication data={i.RSI} /></td>
-                  <td>{(Number(i.Close)).toFixed(2)}</td>
+                  <td><RSIIndication data={i.DRSI} /></td>
                   <td><Indication data={i.Change} /></td>
+                  <td>{(Number(i.Close)).toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      )}
-    </div>
   );
 };
 
-export default RSIOversold;
+export default DRSI;

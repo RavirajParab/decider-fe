@@ -15,6 +15,7 @@ import DeliveryPositions from "./DeliveryPositions";
 import Ticker from "./Ticker";
 import Indices from "./Indices";
 import GlobalIndices from "./GlobalIndices";
+import DRSI from "./DRSI";
 
 const Navigation = () => {
   return (
@@ -94,6 +95,11 @@ const Navigation = () => {
                 Short Candidate
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/drsi">
+                DRSI
+              </Link>
+            </li>
 
             <li className="nav-item">
               <Link className="nav-link" to="/bc">
@@ -156,7 +162,11 @@ const Navigation = () => {
           <AVD />
           <Indices />
         </Route>
-
+        <Route path="/drsi">
+          <MMI />
+          <AVD />
+          <DRSI />
+        </Route>
         
         <Route path="/deliverypositions">
           <MMI />

@@ -384,6 +384,12 @@ const data=[
       "sid": "REDY"
     },
     {
+      "Rank": 64.1,
+      "Symbol": "PRESTIGE",
+      "Security Name": "Prestige Estates Projects Ltd",
+      "sid": "PREG"
+    },
+    {
       "Rank": 65,
       "Symbol": "HINDALCO",
       "Security Name": "HINDALCO  INDUSTRIES  LTD",
@@ -400,6 +406,16 @@ const data=[
       "Symbol": "DIVISLAB",
       "Security Name": "DIVI'S LABORATORIES LTD",
       "sid": "DIVI"
+    }, {
+      "Rank": 67.1,
+      "Symbol": "COFORGE",
+      "Security Name": "Coforge Ltd",
+      "sid": "COFO"
+    }, {
+      "Rank": 67.2,
+      "Symbol": "DHANI",
+      "Security Name": "Dhani Services Ltd",
+      "sid": "INDB"
     },
     {
       "Rank": 68,
