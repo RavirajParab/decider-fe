@@ -16,6 +16,7 @@ import Ticker from "./Ticker";
 import Indices from "./Indices";
 import GlobalIndices from "./GlobalIndices";
 import DRSI from "./DRSI";
+import Forecasts from "./Forecasts";
 
 const Navigation = () => {
   return (
@@ -61,6 +62,12 @@ const Navigation = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/etf">
                 ETF
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link className="nav-link" to="/forecasts">
+                Forecast
               </Link>
             </li>
 
@@ -178,6 +185,10 @@ const Navigation = () => {
           <Balance />
         </Route>
 
+        <Route path="/forecast">
+          <Forecasts />
+        </Route>
+        
          <Route path="/fell">
          <MMI />
           <AVD />
