@@ -5,6 +5,7 @@ import {RSIIndication} from "./Indication";
 
 const ShortCandidate = (props) => {
   const [AllCosSorted, SetAllCosSorted] = useState([]);
+  const [Now, setNow] = useState(0);
 
   const Mode=(flag)=>{
     let reArrangedCos=[];
@@ -47,14 +48,21 @@ const ShortCandidate = (props) => {
       SetAllCosSorted(filteredCompaniesData);
     };
     fetchData();
-  }, []);
+  }, [Now]);
   
+  
+  const refresh =()=>{
+    const newRandom = Math.random()*10000;
+    console.log(newRandom);
+    setNow(newRandom);
+   }
                             
   
   return (
     <div>
           <button className="btn btn-info" onClick={Mode.bind(this,'RSI')}>RSI</button>
           <button className="btn btn-info ml-2" onClick={Mode.bind(this,'DRSI')}>DRSI</button>
+          <button className="btn btn-info ml-2" onClick={refresh}>Refresh</button>
           <table className="table table-striped">
             <thead>
               <tr>

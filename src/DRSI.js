@@ -6,6 +6,7 @@ import {RSIIndication} from "./Indication";
 
 const DRSI = (props) => {
   const [data, setData] = useState([]);
+  const [Now, setNow] = useState(0);
   const AllCosString = localStorage.getItem("allcos");
   const AllCos = JSON.parse(AllCosString);
 
@@ -17,11 +18,17 @@ const DRSI = (props) => {
     reArrangedCos = [...data].sort((a, b) => b.DRSI - a.DRSI);
     setData(reArrangedCos);
   }
+
+  const refresh =()=>{
+   const newRandom = Math.random()*10000;
+   console.log(newRandom);
+   setNow(newRandom);
+  }
  
   useEffect(() => {
     const fetchData = async () => {
       const result = await Axios.get(
-        "https://deciderse.netlify.app/.netlify/functions/topdrsi"
+        `https://deciderse.netlify.app/.netlify/functions/topdrsi?&date=${new Date().toISOString()}`
       );  
      
       const rsiData = result.data
@@ -42,12 +49,13 @@ const DRSI = (props) => {
       setData(rsiData);
     };
     fetchData();
-  }, []);
+  }, [Now]);
   
   return (
     <div>
           <button className="btn btn-info" onClick={Mode.bind(this,'RSI')}>RSI</button>
           <button className="btn btn-info ml-2" onClick={Mode.bind(this,'DRSI')}>DRSI</button>
+          <button className="btn btn-info ml-2" onClick={refresh}>Refresh</button>
           <table className="table table-striped">
             <thead>
               <tr>
