@@ -25,6 +25,7 @@ const DRSI = (props) => {
       );  
      
       const rsiData = result.data
+                            .filter(j=>j!==null)
                             .map(m=>{
                               const co = AllCos.filter(k=>k.sid===m.SID);
                               if(co.length===0){

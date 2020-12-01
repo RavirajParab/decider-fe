@@ -35,6 +35,7 @@ const ShortCandidate = (props) => {
        return company;
       }).sort((a,b)=>a.Change-b.Change)
       .filter(m=>m!==undefined)
+      .filter(m=>m!==null)
       .map(async x=>{
         const lrsiProm = await Axios.get(
           `https://deciderse.netlify.app/.netlify/functions/liversi?sid=${x.sid}`
