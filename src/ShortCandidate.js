@@ -68,6 +68,8 @@ const ShortCandidate = (props) => {
               <tr>
                 <th scope="col">Name</th>
                 <th scope="col">RSI</th>
+                <th scope="col">SL</th>
+                <th scope="col">Tgt</th>
                 <th scope="col">DRSI</th>
                 <th scope="col">Price</th>
                 <th scope="col">Change</th>
@@ -89,6 +91,8 @@ const ShortCandidate = (props) => {
                     </a>{" "}
                   </td>
                   <td><RSIIndication data={i.RSI} /></td>
+                    <td>{(Number(i.Close)*0.006).toFixed(1)}</td>
+                    <td>{(Number(i.Close)*0.007).toFixed(1)}</td>
                   <td><RSIIndication data={i.drsi} /></td>
                   <td>{(Number(i.Close)).toFixed(2)}</td>
                   <td><Indication data={i.Change} /></td>
