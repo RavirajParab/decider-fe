@@ -74,7 +74,7 @@ const Indices = (props) => {
                                             </thead>
                                             <tbody>
                                                 {
-                                                    info.Companies.sort((m,n)=>(m.Change-n.Change)).map((coinfo, idxx) => <tr key={idxx}>
+                                                    info.Companies.sort((m,n)=>(m.Change-n.Change)).filter(k=>k.RSI!=='NA').map((coinfo, idxx) => <tr key={idxx}>
                                                         {/* <th scope="row">{idxx + 1}</th> */}
                                                         <td><a
                                                             target="_blank"
