@@ -17,6 +17,7 @@ import Indices from "./Indices";
 import GlobalIndices from "./GlobalIndices";
 import DRSI from "./DRSI";
 import Future from "./Future";
+import Inverse from "./Inverse";
 
 
 const Navigation = () => {
@@ -129,12 +130,14 @@ const Navigation = () => {
           <MMI />
           <AVD />
           <ShortCandidate/>
+          <Inverse/>
         </Route>
 
         <Route path="/bc">
           <MMI />
           <AVD />
           <BuyCandidate/>
+          <Inverse/>
         </Route>
 
         <Route path="/gi">

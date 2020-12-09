@@ -19,8 +19,8 @@ const Indices = (props) => {
             const indiceData = result.data.map(x => {
                 const companies_copy = x.Companies.map(n => {
                     const co = AllCos.filter(t => t.Symbol === n.Symbol);
-                    if (co.length) {
-                        return { ...n, RSI: co[0].RSI, Change: co[0].Change }
+                    if (co.length) {                    
+                        return { ...n, RSI: co[0].RSI, Change: co[0].Change, Close:Number(co[0].Close) }
                     } else {
                         return { ...n, RSI: 'NA', Change: 0 }
                     }
@@ -65,6 +65,8 @@ const Indices = (props) => {
                                                 <tr>
                                                     {/* <th scope="col">#</th> */}
                                                     <th scope="col">Symbol</th>
+                                                    <th scope="col">SL</th>
+                                                    <th scope="col">Target</th>
                                                     <th scope="col">Change</th>
                                                     <th scope="col">RSI</th>
                                                     <th scope="col">Rise</th>
@@ -84,7 +86,9 @@ const Indices = (props) => {
                                                         >
                                                             <span style={{ color: coinfo.Change < 0 ? 'red' : 'green' }}>{coinfo.Symbol}</span>
 
-                                                        </a></td>
+                                                        </a> {coinfo.Close?"("+(Math.round(100000/coinfo.Close))+")":null}</td>
+                                                        <td>{coinfo.Close?(coinfo.Close*0.006).toFixed(1):"-"}</td>
+                                                        <td>{coinfo.Close?(coinfo.Close*0.007).toFixed(1):"-"}</td>
                                                         <td><Indication data={coinfo.Change} /></td>
                                                         <td><RSIIndication data={coinfo.RSI} /></td>
                                                         <td><Indication data={coinfo.Rise} /></td>

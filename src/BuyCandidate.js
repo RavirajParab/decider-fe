@@ -62,6 +62,8 @@ const BuyCandidate = (props) => {
             <thead>
               <tr>
                 <th scope="col">Name</th>
+                <th scope="col">SL</th>
+                <th scope="col">Tgt</th>
                 <th scope="col">RSI</th>
                 <th scope="col">DRSI</th>
                 <th scope="col">Price</th>
@@ -81,8 +83,10 @@ const BuyCandidate = (props) => {
                       }
                     >
                      <span style={{color:i.YesterdayChange<0?'Red':'Green'}}>{i.Symbol}</span>
-                    </a>{" "}
+                    </a>{" "} ({Math.round(100000/i.Close)})
                   </td>
+                  <td>{(Number(i.Close)*0.006).toFixed(1)}</td>
+                    <td>{(Number(i.Close)*0.007).toFixed(1)}</td>
                   <td><RSIIndication data={i.RSI} /></td>
                   <td><RSIIndication data={i.drsi} /></td>
                   <td>{(Number(i.Close)).toFixed(2)}</td>

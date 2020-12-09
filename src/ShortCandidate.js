@@ -27,12 +27,7 @@ const ShortCandidate = (props) => {
       const AllCosSortedData = JSON.parse(AllCosString);
       const filteredCompanies = shortingData.map( m=>{
         const company = AllCosSortedData.find(n=>n.Symbol===m);
-        /*
-        const lrsiProm = await Axios.get(
-          `https://deciderse.netlify.app/.netlify/functions/liversi?sid=${company.sid}`
-        );
-        return {...company, drsi:lrsiProm.data};
-        */
+      
        return company;
       }).sort((a,b)=>a.Change-b.Change)
       .filter(m=>m!==undefined)
@@ -44,7 +39,6 @@ const ShortCandidate = (props) => {
         return {...x, drsi:lrsiProm.data.RSI}; 
       });
       const filteredCompaniesData = await Promise.all(filteredCompanies);
-      console.log(filteredCompaniesData);
       SetAllCosSorted(filteredCompaniesData);
     };
     fetchData();
@@ -53,11 +47,9 @@ const ShortCandidate = (props) => {
   
   const refresh =()=>{
     const newRandom = Math.random()*10000;
-    console.log(newRandom);
     setNow(newRandom);
    }
                             
-  
   return (
     <div>
           <button className="btn btn-info" onClick={Mode.bind(this,'RSI')}>RSI</button>
@@ -67,9 +59,9 @@ const ShortCandidate = (props) => {
             <thead>
               <tr>
                 <th scope="col">Name</th>
-                <th scope="col">RSI</th>
                 <th scope="col">SL</th>
                 <th scope="col">Tgt</th>
+                <th scope="col">RSI</th>
                 <th scope="col">DRSI</th>
                 <th scope="col">Price</th>
                 <th scope="col">Change</th>
@@ -88,11 +80,12 @@ const ShortCandidate = (props) => {
                       }
                     >
                      <span style={{color:i.YesterdayChange<0?'Red':'Green'}}>{i.Symbol}</span>
-                    </a>{" "}
+                    </a>{" "} ({Math.round(100000/i.Close)})
                   </td>
-                  <td><RSIIndication data={i.RSI} /></td>
+                 
                     <td>{(Number(i.Close)*0.006).toFixed(1)}</td>
                     <td>{(Number(i.Close)*0.007).toFixed(1)}</td>
+                    <td><RSIIndication data={i.RSI} /></td>
                   <td><RSIIndication data={i.drsi} /></td>
                   <td>{(Number(i.Close)).toFixed(2)}</td>
                   <td><Indication data={i.Change} /></td>
