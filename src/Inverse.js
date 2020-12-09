@@ -78,8 +78,8 @@ const Inverse = (props) => {
                     ({Math.round(100000/i.price)})
                   </td>
                   
-                    <td>{(i.price*0.006).toFixed(1)}</td>
-                    <td>{(i.price*0.007).toFixed(1)}</td> 
+                    <td>{(i.price*0.005).toFixed(1)}</td>
+                    <td>{(i.price*0.009).toFixed(1)}</td> 
                     <td>{(Number(i.price)).toFixed(2)}</td>
                 </tr>
               ))}

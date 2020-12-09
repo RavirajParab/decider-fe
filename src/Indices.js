@@ -87,8 +87,8 @@ const Indices = (props) => {
                                                             <span style={{ color: coinfo.Change < 0 ? 'red' : 'green' }}>{coinfo.Symbol}</span>
 
                                                         </a> {coinfo.Close?"("+(Math.round(100000/coinfo.Close))+")":null}</td>
-                                                        <td>{coinfo.Close?(coinfo.Close*0.006).toFixed(1):"-"}</td>
-                                                        <td>{coinfo.Close?(coinfo.Close*0.007).toFixed(1):"-"}</td>
+                                                        <td>{coinfo.Close?(coinfo.Close*0.005).toFixed(1):"-"}</td>
+                                                        <td>{coinfo.Close?(coinfo.Close*0.009).toFixed(1):"-"}</td>
                                                         <td><Indication data={coinfo.Change} /></td>
                                                         <td><RSIIndication data={coinfo.RSI} /></td>
                                                         <td><Indication data={coinfo.Rise} /></td>

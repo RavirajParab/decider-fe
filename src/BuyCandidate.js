@@ -85,8 +85,8 @@ const BuyCandidate = (props) => {
                      <span style={{color:i.YesterdayChange<0?'Red':'Green'}}>{i.Symbol}</span>
                     </a>{" "} ({Math.round(100000/i.Close)})
                   </td>
-                  <td>{(Number(i.Close)*0.006).toFixed(1)}</td>
-                    <td>{(Number(i.Close)*0.007).toFixed(1)}</td>
+                  <td>{(Number(i.Close)*0.005).toFixed(1)}</td>
+                    <td>{(Number(i.Close)*0.009).toFixed(1)}</td>
                   <td><RSIIndication data={i.RSI} /></td>
                   <td><RSIIndication data={i.drsi} /></td>
                   <td>{(Number(i.Close)).toFixed(2)}</td>
