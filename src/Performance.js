@@ -24,6 +24,7 @@ const Performance = (props) => {
         }
       });
      
+     
       const rsiData = companies
         .sort((a, b) => a.monthlyPercentageChange - b.monthlyPercentageChange);
       setData(rsiData);
@@ -64,6 +65,8 @@ const Performance = (props) => {
               <thead>
                 <tr>
                   <th scope="col">Name</th>
+                  <th scope="col">SL</th>
+                  <th scope="col">Tgt</th>
                   <th scope="col">RSI</th>
                   <th scope="col">5Days</th>
                   <th scope="col">14Days</th>
@@ -84,8 +87,10 @@ const Performance = (props) => {
                         }
                       >
                         <span style={{ color: i.percentChange < 0 ? 'Red' : 'Green' }}>{i.symbol}</span>
-                      </a>{" "}<br/>
+                      </a>({Math.round(100000/i.lastTradedPrice)}){" "}<br/>
                     </td>
+                    <td>{(Number(i.lastTradedPrice)*0.005).toFixed(1)}</td>
+                    <td>{(Number(i.lastTradedPrice)*0.009).toFixed(1)}</td>
                     <td><RSIIndication data={i.rsi} /></td>
                     <td><Indication data={i.change5} /></td>
                     <td><Indication data={i.change14} /></td>
