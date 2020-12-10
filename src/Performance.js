@@ -14,7 +14,7 @@ const Performance = (props) => {
       const AllCosString = localStorage.getItem("allcos");
       const AllCos = JSON.parse(AllCosString);
       //set the filetered data for display
-      const companies=result.data.map(i=>{
+      const companies=result.data.filter(i=>i!=null).map(i=>{
         const cos= AllCos.find(m=>m.Symbol===i.symbol);
         return {
           ...i,
