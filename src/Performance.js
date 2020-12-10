@@ -14,14 +14,17 @@ const Performance = (props) => {
       const AllCosString = localStorage.getItem("allcos");
       const AllCos = JSON.parse(AllCosString);
       //set the filetered data for display
-      const companies=result.data.filter(i=>i!=null).map(i=>{
+      const companies=result.data.map(i=>{
         const cos= AllCos.find(m=>m.Symbol===i.symbol);
-        return {
-          ...i,
-          rsi: cos.RSI,
-          change5: cos.Change5,
-          change14: cos.Change14
+        if(cos){
+          return {
+            ...i,
+            rsi: cos.RSI,
+            change5: cos.Change5,
+            change14: cos.Change14
+          }
         }
+        
       });
      
      
