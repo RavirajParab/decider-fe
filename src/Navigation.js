@@ -18,6 +18,7 @@ import GlobalIndices from "./GlobalIndices";
 import DRSI from "./DRSI";
 import Future from "./Future";
 import Inverse from "./Inverse";
+import Timing from "./Timing";
 
 
 const Navigation = () => {
@@ -109,6 +110,11 @@ const Navigation = () => {
                 DRSI
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/timing">
+                Timing
+              </Link>
+            </li>
 
             <li className="nav-item">
               <Link className="nav-link" to="/bc">
@@ -131,7 +137,13 @@ const Navigation = () => {
           <AVD />
           <ShortCandidate/>
           <Inverse/>
-        </Route>
+        </Route> 
+
+        <Route path="/timing">
+          <MMI />
+          <AVD />
+          <Timing/>
+        </Route> 
 
         <Route path="/bc">
           <MMI />
