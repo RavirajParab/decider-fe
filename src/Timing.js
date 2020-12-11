@@ -1,81 +1,94 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import IndexRSI from "./IndexDRSI";
-  
+
 
 const Timing = (props) => {
-  const [data, setData] = useState({});
-  const getData =async ()=>{
+  const [data, setData] = useState([]);
+  const inRange = (rxTime) => {
+    const currentTime = new Date();
+    const eventTime = new Date(rxTime);
+    const difMill = Math.abs(currentTime - eventTime);
+    if (difMill <= 600000) {
+      return true;
+    }
+    return false;
+  }
+  const getData = async () => {
     const result = await Axios.get(
       `https://deciderse.netlify.app/.netlify/functions/timing?date=${new Date().toISOString()}`
-    );  
-    setData(result.data);
+    );
+    const processedData = result.data.map(i => {
+      return {
+        sid: i.sid,
+        stime: i.shortTingOpps ? new Date(i.shortTingOpps.TSZ).toLocaleTimeString() : "-",
+        btime: i.buyingOpps ? new Date(i.buyingOpps.TSZ).toLocaleTimeString() : "-",
+        srange: i.shortTingOpps ? inRange(i.shortTingOpps.TSZ) : false,
+        brange: i.buyingOpps ? inRange(i.buyingOpps.TSZ) : false
+      }
+    })
+    console.log(processedData);
+    setData(processedData);
   }
-  const refresh =async ()=>{
+  const refresh = async () => {
     await getData();
   }
- 
+
+  useEffect(() => {
+    if ((new Date()).getHours() < 16) {
+      const interval = setInterval(async () => {
+        await getData();
+      }, 120000);
+      return () => clearInterval(interval);
+    }
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
-     await getData();
+      await getData();
     };
     fetchData();
   }, []);
-  
+
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-6 col-sm-12">
-        <button className="btn btn-info ml-2" onClick={refresh}>Refresh</button>
+          <button className="btn btn-info ml-2" onClick={refresh}>Refresh</button>
           <table className="table table-striped">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">SID</th>
                 <th scope="col">Shorting</th>
                 <th scope="col">Buying</th>
               </tr>
             </thead>
             <tbody>
-                <tr>
-                <td></td>
-
-                <td>
-                  {data.shortingOpps?
-                   data.shortingOpps.reverse().map((i,index)=>
-                   <div className="card text-white bg-dark mb-3 card-text p-4" 
-                   style={{maxWidth:"200px"}} 
-                   key={index}>
-                    {i.RSI}
-                    @
-                    {new Date(i.TS).toLocaleTimeString()}
-                    <br/>({i.TS.split('T')[1]})
-                    </div>)
-                  :null}
-                </td>
-
+              {
+                data.map((i, index) => <tr key={index}>
                   <td>
-                  {data.buyingOpps?
-                   data.buyingOpps.reverse().map((i,index)=>
-                   <div className="card text-white bg-success mb-3 card-text p-4" 
-                   style={{maxWidth:"200px"}} 
-                   key={index}>
-                    {i.RSI}
-                    @
-                    {new Date(i.TS).toLocaleTimeString()}
-                    <br/>({i.TS.split('T')[1]})
-                    </div>)
-                  :null}
+                    {i.sid}
                   </td>
-                </tr>
+
+                  <td style={{ backgroundColor: i.srange ? 'lightgreen' : null }}>
+                     {i.stime}
+                  </td>
+
+                  <td style={{ backgroundColor: i.brange ? 'lightgreen' : null }}>
+                    {i.btime}
+                  </td>
+                </tr>)
+              }
+
             </tbody>
           </table>
         </div>
         <div className="col-md-6 col-sm-12">
-        <IndexRSI/>
+          <IndexRSI />
         </div>
-        </div> 
-        
-        </div>
+      </div>
+
+    </div>
   );
 };
 

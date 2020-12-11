@@ -13,7 +13,7 @@ const RSIOversold = (props) => {
         "https://deciderse.netlify.app/.netlify/functions/topcompanies"
       );
       result.data.pop();  
-     
+      
       
       const rsiData = result.data
                             .filter(i=>i!==null)

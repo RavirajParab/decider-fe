@@ -35,6 +35,7 @@ const Ticker = (props) => {
               <option key='NearLow'>NearLow</option>
               <option key='NiftyLow'>NiftyLow</option>
               <option key='TopTwentyFive'>TopTwentyFive</option>
+              <option key='Beta'>Beta</option>
           </select>
           <table className="table table-striped">
             <thead>

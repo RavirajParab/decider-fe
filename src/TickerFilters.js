@@ -30,6 +30,16 @@ export const TopTwentyFive=(data)=>{
 }
 
 
+export const Beta=(data)=>{
+    const dataFiltered = data.sort((a,b)=>b.mcap-a.mcap)
+               .filter(k=>k.beta!=0)
+               .slice(0,200)
+               .sort((a,b)=>a.beta-b.beta);
+               console.log(dataFiltered);
+               return dataFiltered;
+}
+
+
 export const None=(data)=>{
     return [];
 }

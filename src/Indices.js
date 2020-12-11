@@ -3,15 +3,40 @@ import Axios from 'axios';
 import Loading from "./Loading";
 import { Indication } from "./Indication";
 import { RSIIndication } from "./Indication";
+import LocalSIDData from "./data";
 
 
 const Indices = (props) => {
     const AllCosString = localStorage.getItem("allcos");
-    const AllCos = JSON.parse(AllCosString);
+    // const AllCos = JSON.parse(AllCosString);
     const [data, setData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
+
+            //Get the parent data starts here
+            const resultRSI = await Axios.get(
+                "https://deciderse.netlify.app/.netlify/functions/topcompanies"
+            );
+            resultRSI.data.pop();
+            const AllCos = resultRSI.data
+                .filter(i => i !== null)
+                .map(m => {
+                    const co = LocalSIDData.filter(k => k.Symbol === m.Symbol);
+                    let sidc = 'NA';
+                    if (co.length) {
+                        if (co[0]) {
+                            sidc = co[0].sid;
+                        }
+                    }
+                    return { ...m, sid: sidc }
+                })
+                .sort((a, b) => a.RSI - b.RSI);
+            //set the data in the local storage
+            console.log(AllCos);
+
+
+            //get the parent data ends here
             const result = await Axios.get(
                 "https://deciderse.netlify.app/.netlify/functions/indices"
             );
@@ -19,15 +44,15 @@ const Indices = (props) => {
             const indiceData = result.data.map(x => {
                 const companies_copy = x.Companies.map(n => {
                     const co = AllCos.filter(t => t.Symbol === n.Symbol);
-                    if (co.length) {                    
-                        return { ...n, RSI: co[0].RSI, Change: co[0].Change, Close:Number(co[0].Close) }
+                    if (co.length) {
+                        return { ...n, RSI: co[0].RSI, Change: co[0].Change, Close: Number(co[0].Close) }
                     } else {
                         return { ...n, RSI: 'NA', Change: 0 }
                     }
                 });
                 return { ...x, Companies: companies_copy }
             });
-
+            console.log(indiceData);
 
             setData(indiceData);
         };
@@ -74,7 +99,7 @@ const Indices = (props) => {
                                             </thead>
                                             <tbody>
                                                 {
-                                                    info.Companies.sort((m,n)=>(m.Change-n.Change)).filter(k=>k.RSI!=='NA').map((coinfo, idxx) => <tr key={idxx}>
+                                                    info.Companies.sort((m, n) => (m.Change - n.Change)).filter(k => k.RSI !== 'NA').map((coinfo, idxx) => <tr key={idxx}>
                                                         {/* <th scope="row">{idxx + 1}</th> */}
                                                         <td><a
                                                             target="_blank"
@@ -86,9 +111,9 @@ const Indices = (props) => {
                                                         >
                                                             <span style={{ color: coinfo.Change < 0 ? 'red' : 'green' }}>{coinfo.Symbol}</span>
 
-                                                        </a> {coinfo.Close?"("+(Math.round(100000/coinfo.Close))+")":null}</td>
-                                                        <td>{coinfo.Close?(coinfo.Close*0.005).toFixed(1):"-"}</td>
-                                                        <td>{coinfo.Close?(coinfo.Close*0.009).toFixed(1):"-"}</td>
+                                                        </a> {coinfo.Close ? "(" + (Math.round(100000 / coinfo.Close)) + ")" : null}</td>
+                                                        <td>{coinfo.Close ? (coinfo.Close * 0.005).toFixed(1) : "-"}</td>
+                                                        <td>{coinfo.Close ? (coinfo.Close * 0.009).toFixed(1) : "-"}</td>
                                                         <td><Indication data={coinfo.Change} /></td>
                                                         <td><RSIIndication data={coinfo.RSI} /></td>
                                                         <td><Indication data={coinfo.Rise} /></td>
