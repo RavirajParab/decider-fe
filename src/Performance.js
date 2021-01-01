@@ -24,12 +24,12 @@ const Performance = (props) => {
             change14: cos.Change14
           }
         }
-        
       });
      
-     
       const rsiData = companies
+        .filter(i=>i!==undefined)
         .sort((a, b) => a.monthlyPercentageChange - b.monthlyPercentageChange);
+        console.log(rsiData); 
       setData(rsiData);
     };
     fetchData();
