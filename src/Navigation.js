@@ -12,7 +12,7 @@ import BuyCandidate from "./BuyCandidate";
 import Performance from "./Performance";
 import Transact from "./Transact";
 import DeliveryPositions from "./DeliveryPositions";
-import Ticker from "./Ticker";
+import Screener from "./Screener";
 import Indices from "./Indices";
 import GlobalIndices from "./GlobalIndices";
 import DRSI from "./DRSI";
@@ -81,8 +81,8 @@ const Navigation = () => {
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link" to="/ticker">
-                Ticker
+              <Link className="nav-link" to="/screener">
+                Screener
               </Link>
             </li>
 
@@ -211,8 +211,8 @@ const Navigation = () => {
          <FellToday/>
         </Route> 
 
-        <Route path="/ticker">
-         <Ticker/>
+        <Route path="/screener">
+         <Screener/>
         </Route>
 
         <Route path="/">
