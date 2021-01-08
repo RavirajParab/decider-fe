@@ -8,7 +8,7 @@ const Screener = (props) => {
   const [HitRate, setHitRate] = useState([]);
   useEffect(() => {
     //get and set the ticker data
-    const DataLS = JSON.parse(localStorage.getItem('allcos'));
+    const DataLS = JSON.parse(localStorage.getItem('TickerData'));
     setSecData(DataLS)
   }, []);
 
@@ -34,7 +34,8 @@ const Screener = (props) => {
               <option key='None'>None</option>
               <option key='StrategyOne'>StrategyOne</option>
               <option key='StrategyTwo'>StrategyTwo</option>
-            
+              <option key='StrategyThree'>StrategyThree</option>
+              <option key='StrategyFour'>StrategyFour</option>
           </select>
           <table className="table table-striped">
             <thead>

@@ -1,16 +1,11 @@
 
 
 export const StrategyOne=(data)=>{
-            const filteredData = data.map(i=>{
-                return {
-                    ...i,
-                    IntradayRise : i.Close-i.Open
-                }
-            }).filter(i=>((Number(i.Open)<Number(i.PreviousClose))
-                                                &&(i.YesterdayChange>0)
+    //weak and opened below previous close
+            const filteredData = data.filter(i=>((Number(i.Open)<Number(i.PreviousClose))                                             
                                                 &&(Number(i.Change5)<2)
                                                 ))
-                                    .sort((a,b)=>a.IntradayRise-b.IntradayRise)                               
+                                    .sort((a,b)=>a.IR-b.IR)                               
             const fell = filteredData.filter(i=>(Number(i.Close)-Number(i.Open)<0));
             const HitRate =(fell.length*100/filteredData.length).toFixed(2);
             return {filteredData,HitRate};
@@ -18,19 +13,39 @@ export const StrategyOne=(data)=>{
 
 
 export const StrategyTwo=(data)=>{
-    const filteredData = data.map(i=>{
-        return {
-            ...i,
-            IntradayRise : i.Close-i.Open
-        }
-    }).filter(i=>(Number(i.Change14)<0)
-                                        &&(Number(i.YesterdayChange)>1)
+    const filteredData = data.filter(i=>i.SMA5<i.SMA14
                                     )
-                            .sort((a,b)=>a.IntradayRise-b.IntradayRise)                               
+                            .sort((a,b)=>a.IR-b.IR)                               
     const fell = filteredData.filter(i=>(Number(i.Close)-Number(i.Open)<0));
     const HitRate =(fell.length*100/filteredData.length).toFixed(2);
     return {filteredData,HitRate};
 }
+
+
+export const StrategyThree=(data)=>{
+    //blasted yesterday with high intra day gain
+    const filteredData = data.filter(i=>
+                                        i.PIR>2.2
+                                    )
+                            .sort((a,b)=>a.IR-b.IR)                               
+    const fell = filteredData.filter(i=>(Number(i.Close)-Number(i.Open)<0));
+    const HitRate =(fell.length*100/filteredData.length).toFixed(2);
+    return {filteredData,HitRate};
+}
+
+
+export const StrategyFour=(data)=>{
+    //losing stem in last 5 days
+    const filteredData = data.filter(i=>
+                                        i.Change5<0 && i.Change14>3
+                                    )
+                            .sort((a,b)=>a.IR-b.IR)   ;
+                            console.log(filteredData);                            
+    const fell = filteredData.filter(i=>(Number(i.Close)-Number(i.Open)<0));
+    const HitRate =(fell.length*100/filteredData.length).toFixed(2);
+    return {filteredData,HitRate};
+}
+
 
 
 export const None=(data)=>{
