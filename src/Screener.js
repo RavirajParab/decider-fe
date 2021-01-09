@@ -49,7 +49,7 @@ const Screener = (props) => {
               </tr>
             </thead>
             <tbody>
-              {Data.map((i, index) => (
+              {Data?Data.map((i, index) => (
                 <tr key={index}>
                   <td>
                     <a
@@ -65,11 +65,11 @@ const Screener = (props) => {
                   </td>
                   <td>{i.RSI.toFixed(2)}</td>
                   <td>{i.Change.toFixed(2)}</td>
-                  <td>{(Number(i.Close)-Number(i.Open)).toFixed(2)}</td>
+                  <td>{i.IR}</td>
                   <td>{i.Change5.toFixed(2)}</td>
                   <td>{i.Change14.toFixed(2)}</td>
                 </tr>
-              ))}
+              )):null}
             </tbody>
           </table>
     </div>

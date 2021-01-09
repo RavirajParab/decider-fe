@@ -37,7 +37,7 @@ const DataLoader = (props) => {
     const result = await Axios.get(
       "https://deciderse.netlify.app/.netlify/functions/ticker"
     );
-    const tickerData =result.data;
+    const tickerData =result.data.filter(i=>i!=null);
     //set the data in the local storage
     localStorage.setItem('rawTickerData',JSON.stringify(tickerData));
     console.log('Step 2 complete');

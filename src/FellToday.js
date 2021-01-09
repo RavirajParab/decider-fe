@@ -5,8 +5,8 @@ import {RSIIndication} from "./Indication";
 const FellToday = (props) => {
   const AllCosString = localStorage.getItem("allcos");
   const AllCos = JSON.parse(AllCosString);
-  const AllCosSorted= AllCos.filter(i=>i.Change<0)
-                            .sort((a,b)=>a.Change-b.Change);
+  const AllCosSorted= AllCos.filter(i=>i.IR<0)
+                            .sort((a,b)=>a.IR-b.IR);
   
   return (
     <div>
@@ -16,7 +16,7 @@ const FellToday = (props) => {
                 <th scope="col">Name</th>
                 <th scope="col">RSI</th>
                 <th scope="col">Price</th>
-                <th scope="col">Change</th>
+                <th scope="col">IR</th>
               </tr>
             </thead>
             <tbody>
@@ -36,7 +36,7 @@ const FellToday = (props) => {
                   </td>
                   <td><RSIIndication data={i.RSI} /></td>
                   <td>{(Number(i.Close)).toFixed(2)}</td>
-                  <td><Indication data={i.Change} /></td>
+                  <td><Indication data={i.IR} /></td>
                 </tr>
               ))}
             </tbody>
