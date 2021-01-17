@@ -4,20 +4,20 @@ import RSIOversold from "./RSIOversold";
 import MMI from "./Mmi";
 import AVD from "./Avd";
 import Etf from "./Etf";
-import ShortPositions from "./ShortPositions";
+import ScreenerExecutor from "./ScreenerExecutor";
+//import ShortPositions from "./ShortPositions";
 import Balance from "./Balance";
 import FellToday from "./FellToday";
-import ShortCandidate from "./ShortCandidate";
-import BuyCandidate from "./BuyCandidate";
+//import ShortCandidate from "./ShortCandidate";
+//import BuyCandidate from "./BuyCandidate";
 import Performance from "./Performance";
-import Transact from "./Transact";
+//import Transact from "./Transact";
 import DeliveryPositions from "./DeliveryPositions";
 import Screener from "./Screener";
 import Indices from "./Indices";
 import GlobalIndices from "./GlobalIndices";
-import DRSI from "./DRSI";
 import Future from "./Future";
-import Inverse from "./Inverse";
+//import Inverse from "./Inverse";
 import Timing from "./Timing";
 
 
@@ -73,50 +73,51 @@ const Navigation = () => {
                 Forecast
               </Link>
             </li>
-
+{/* 
             <li className="nav-item">
               <Link className="nav-link" to="/transact">
                 Transact
               </Link>
-            </li>
+            </li> */}
 
             <li className="nav-item">
               <Link className="nav-link" to="/screener">
                 Screener
               </Link>
             </li>
-
             <li className="nav-item">
-              <Link className="nav-link" to="/shortpositions">
-                Short Positions
+              <Link className="nav-link" to="/se">
+                Executor
               </Link>
             </li>
 
-          
+            {/* <li className="nav-item">
+              <Link className="nav-link" to="/shortpositions">
+                Short Positions
+              </Link>
+            </li> */}
 
+          
+{/* 
             <li className="nav-item">
               <Link className="nav-link" to="/deliverypositions">
                 Delivery Positions
               </Link>
-            </li>
+            </li> */}
 
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/sc">
                 Short Candidate
               </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/drsi">
-                DRSI
-              </Link>
-            </li>
+            </li> */}
+           
             <li className="nav-item">
               <Link className="nav-link" to="/timing">
                 Timing
               </Link>
             </li>
 
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/bc">
                 Buy Candidate
               </Link>
@@ -126,31 +127,34 @@ const Navigation = () => {
               <Link className="nav-link" to="/balance">
                 Balance
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </nav>
 
       <Switch>
-        <Route path="/sc">
+        {/* <Route path="/sc">
           <MMI />
           <AVD />
           <ShortCandidate/>
           <Inverse/>
-        </Route> 
+        </Route>  */}
 
         <Route path="/timing">
           <MMI />
           <AVD />
           <Timing/>
         </Route> 
+        <Route path="/se">
+          <ScreenerExecutor/>
+        </Route> 
 
-        <Route path="/bc">
+        {/* <Route path="/bc">
           <MMI />
           <AVD />
           <BuyCandidate/>
           <Inverse/>
-        </Route>
+        </Route> */}
 
         <Route path="/gi">
           <MMI />
@@ -158,9 +162,9 @@ const Navigation = () => {
           <GlobalIndices/>
         </Route>
 
-        <Route path="/transact">
+        {/* <Route path="/transact">
           <Transact />
-        </Route>
+        </Route> */}
 
         <Route path="/etf">
           <MMI />
@@ -174,22 +178,18 @@ const Navigation = () => {
           <Performance />
         </Route>
 
-        <Route path="/shortpositions">
+        {/* <Route path="/shortpositions">
           <MMI />
           <AVD />
           <ShortPositions />
-        </Route>
+        </Route> */}
 
         <Route path="/indices">
           <MMI />
           <AVD />
           <Indices />
         </Route>
-        <Route path="/drsi">
-          <MMI />
-          <AVD />
-          <DRSI />
-        </Route>
+        
         
         <Route path="/deliverypositions">
           <MMI />
@@ -226,3 +226,11 @@ const Navigation = () => {
 };
 
 export default Navigation;
+/* Notes about unused components
+   Buy Candidate 
+   Short Candidate
+   Transact
+   Short Positions
+   Balance
+   Delivery Positions
+*/

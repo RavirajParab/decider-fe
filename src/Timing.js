@@ -71,11 +71,11 @@ const Timing = (props) => {
                   </td>
 
                   <td style={{ backgroundColor: i.srange ? 'lightgreen' : null }}>
-                     {i.stime}
+                     {i.stime=='Invalid Date'?'-':i.stime}
                   </td>
 
                   <td style={{ backgroundColor: i.brange ? 'lightgreen' : null }}>
-                    {i.btime}
+                    {i.btime=='Invalid Date'?'-':i.btime}
                   </td>
                 </tr>)
               }

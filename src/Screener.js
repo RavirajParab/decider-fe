@@ -8,7 +8,7 @@ const Screener = (props) => {
   const [HitRate, setHitRate] = useState([]);
   useEffect(() => {
     //get and set the ticker data
-    const DataLS = JSON.parse(localStorage.getItem('TickerData'));
+    const DataLS = JSON.parse(localStorage.getItem('allcos'));
     setSecData(DataLS)
   }, []);
 
@@ -17,13 +17,31 @@ const Screener = (props) => {
     const filter=e.target.value;
     //call the filter
    const filteredData= filters[filter](SecData);
-   setData(filteredData.filteredData);
-   setHitRate(filteredData.HitRate)
+   getDynamicData(filteredData);
+  }
+
+  const getDynamicData =async (filteredData)=>{
+    if(filteredData.filteredData){
+      const sids = filteredData.filteredData.map(i=>i.sid).join(',');
+      const urlProm = await fetch(`https://deciderse.netlify.app/.netlify/functions/drsilite?sid=${sids}`);
+      const rawData = await urlProm.json();
+      const mergeData = filteredData.filteredData.map((i,index)=>{
+        return {...i,...rawData[index]}
+      });
+      console.log(mergeData);
+       setData(mergeData);
+     // setData(filteredData.filteredData);
+      setHitRate(filteredData.HitRate);
+    }else{
+      setData([]);
+      setHitRate(0);
+    }
+    
   }
   
   return (  
     <div>
-      <DataLoader/>
+      <DataLoader/> 
       <h3>Select Filter {HitRate}</h3><br/>
       <label htmlFor="Filter">Select Security</label>
           <select
@@ -36,16 +54,18 @@ const Screener = (props) => {
               <option key='StrategyTwo'>StrategyTwo</option>
               <option key='StrategyThree'>StrategyThree</option>
               <option key='StrategyFour'>StrategyFour</option>
+              <option key='StrategyFive'>StrategyFive</option>
           </select>
           <table className="table table-striped">
             <thead>
               <tr>
                 <th scope="col">Symbol</th>
-                <th scope="col">RSI</th>
-                <th scope="col">Change</th>
-                <th scope="col">Pts</th>
-                <th scope="col">Change5</th>
-                <th scope="col">Change14</th>
+                <th scope="col">DRSI</th>
+                <th scope="col">IR</th>
+                <th scope="col">5MC</th>
+                <th scope="col">15MC</th>
+                <th scope="col">PChange5</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -64,10 +84,10 @@ const Screener = (props) => {
                     </a>{" "}
                   </td>
                   <td>{i.RSI.toFixed(2)}</td>
-                  <td>{i.Change.toFixed(2)}</td>
                   <td>{i.IR}</td>
-                  <td>{i.Change5.toFixed(2)}</td>
-                  <td>{i.Change14.toFixed(2)}</td>
+                  <td>{i.Trend.First5MinR.toFixed(2)}</td>
+                  <td>{i.Trend.First15MinR.toFixed(2)}</td>
+                  <td>{i.PChange5.toFixed(2)}</td>
                 </tr>
               )):null}
             </tbody>

@@ -30,6 +30,7 @@ const RSIOversold = (props) => {
                             .sort((a, b) => a.RSI - b.RSI);
         
       //set the data in the local storage
+      localStorage.removeItem('allcos');
       localStorage.setItem('allcos',JSON.stringify(rsiData));
       //set the filetered data for display
       const rsiFiltered =rsiData.filter(i=>i.RSI<40);
