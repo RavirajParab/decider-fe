@@ -17,21 +17,32 @@ const Screener = (props) => {
     const filter=e.target.value;
     //call the filter
    const filteredData= filters[filter](SecData);
-   getDynamicData(filteredData);
+   if(filteredData.refreshRequired){
+    getDynamicData(filteredData.data);
+   }else{
+    //console.log(filteredData.data);
+    setData(filteredData.data);
+    setCalculatedHitRate(filteredData.data);
+   }
+  }
+
+  const setCalculatedHitRate =(data)=>{
+    //Evaluate the Hit Rate  
+    const fell = data.filter(i=>i.IR<0);
+    const HitRate =(fell.length*100/data.length).toFixed(2);
+    setHitRate(HitRate);
   }
 
   const getDynamicData =async (filteredData)=>{
-    if(filteredData.filteredData){
-      const sids = filteredData.filteredData.map(i=>i.sid).join(',');
+    if(filteredData){
+      const sids = filteredData.map(i=>i.sid).join(',');
       const urlProm = await fetch(`https://deciderse.netlify.app/.netlify/functions/drsilite?sid=${sids}`);
       const rawData = await urlProm.json();
-      const mergeData = filteredData.filteredData.map((i,index)=>{
+      const mergeData = filteredData.map((i,index)=>{
         return {...i,...rawData[index]}
       });
-      console.log(mergeData);
-       setData(mergeData);
-     // setData(filteredData.filteredData);
-      setHitRate(filteredData.HitRate);
+      setData(mergeData);
+      setCalculatedHitRate(mergeData);
     }else{
       setData([]);
       setHitRate(0);
@@ -55,6 +66,7 @@ const Screener = (props) => {
               <option key='StrategyThree'>StrategyThree</option>
               <option key='StrategyFour'>StrategyFour</option>
               <option key='StrategyFive'>StrategyFive</option>
+              <option key='StrategySix'>StrategySix</option>
           </select>
           <table className="table table-striped">
             <thead>
@@ -62,9 +74,7 @@ const Screener = (props) => {
                 <th scope="col">Symbol</th>
                 <th scope="col">DRSI</th>
                 <th scope="col">IR</th>
-                <th scope="col">5MC</th>
-                <th scope="col">15MC</th>
-                <th scope="col">PChange5</th>
+                
                 
               </tr>
             </thead>
@@ -80,14 +90,12 @@ const Screener = (props) => {
                         i.Symbol
                       }
                     >
-                   <span style={{color:(Number(i.Open)-Number(i.Close))>0?'Red':'Green'}}>{i.Symbol}</span>  
+                   <span style={{color:(Number(i.Open)-Number(i.Close))>0?'Red':'Green'}}>{i.Symbol?i.Symbol:i.SID}</span>  
                     </a>{" "}
                   </td>
-                  <td>{i.RSI.toFixed(2)}</td>
+                  <td>{i.RSI?i.RSI.toFixed(2): '-'}</td>
                   <td>{i.IR}</td>
-                  <td>{i.Trend.First5MinR.toFixed(2)}</td>
-                  <td>{i.Trend.First15MinR.toFixed(2)}</td>
-                  <td>{i.PChange5.toFixed(2)}</td>
+                 
                 </tr>
               )):null}
             </tbody>

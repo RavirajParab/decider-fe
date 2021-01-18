@@ -106,6 +106,11 @@ const data=[
       "Symbol": "HCLTECH",
       "Security Name": "HCL TECHNOLOGIES LTD",
       "sid": "HCLT"
+    },{
+      "Rank": 18.1,
+      "Symbol": "ATGL",
+      "Security Name": "Adani Total Gas Ltd",
+      "sid": "ADAG"
     },
     {
       "Rank": 19,

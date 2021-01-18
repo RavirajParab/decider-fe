@@ -13,12 +13,20 @@ export const StrategyOne=(data)=>{
         && i.PChange<-1.
         && i.RSI!=undefined 
     ))
-    .sort((a,b)=>a.IR-b.IR)   ;                                
-    const fell = filteredData.filter(i=>(Number(i.Close)-Number(i.Open)<0));
-    const HitRate =(fell.length*100/filteredData.length).toFixed(2);
-    return {filteredData,HitRate};
-
-    
+    .sort((a,b)=>a.IR-b.IR); 
+    //pL execution stub starts here
+    const plArr = filteredData.map(i=>execute(i.sid));
+        let totalPL=0;
+        plArr.forEach(element => {
+            totalPL+=element.PL
+        });
+        console.log(plArr);
+        console.log(`Total PL is ${totalPL}`);
+        //pL execution stub ends here
+    return {
+        data : filteredData,
+        refreshRequired : true
+    }
 }
 
 
@@ -28,10 +36,10 @@ export const StrategyTwo=(data)=>{
         i.Open<i.PClose && i.PIR>0 && i.PChange5>0
                                     )
                             .sort((a,b)=>a.IR-b.IR)  ;
-                                                      
-    const fell = filteredData.filter(i=>(Number(i.Close)-Number(i.Open)<0));
-    const HitRate =(fell.length*100/filteredData.length).toFixed(2);
-    return {filteredData,HitRate};
+                            return {
+                                data : filteredData,
+                                refreshRequired : true
+                            }
 }
 
 export const StrategyThree=(data)=>{
@@ -41,9 +49,10 @@ export const StrategyThree=(data)=>{
                                         && i.RSI!=undefined 
                                     )
                             .sort((a,b)=>a.IR-b.IR)                               
-    const fell = filteredData.filter(i=>(Number(i.Close)-Number(i.Open)<0));
-    const HitRate =(fell.length*100/filteredData.length).toFixed(2);
-    return {filteredData,HitRate};
+                            return {
+                                data : filteredData,
+                                refreshRequired : true
+                            }
 }
 
 
@@ -55,10 +64,10 @@ export const StrategyFour=(data)=>{
                                         && i.RSI!=undefined 
                                     )
                             .sort((a,b)=>a.IR-b.IR)   ;
-                                                      
-    const fell = filteredData.filter(i=>(Number(i.Close)-Number(i.Open)<0));
-    const HitRate =(fell.length*100/filteredData.length).toFixed(2);
-    return {filteredData,HitRate};
+                            return {
+                                data : filteredData,
+                                refreshRequired : true
+                            }
 }
 
 export const StrategyFive=(data)=>{
@@ -76,11 +85,8 @@ export const StrategySix=(data)=>{
               i.Trend.First15MinR<0 && 
               i.Trend.First15MinR<1.7*i.Trend.First5MinR
             ));
-            
-        console.log(First5MinsPlus);
-        const fell = First5MinsPlus.filter(i=>i.IR<0);
-        const HitRate =(fell.length*100/First5MinsPlus.length).toFixed(2);
-        console.log(HitRate);
+            /*
+       
         //test execute pl
         const plArr = First5MinsPlus.map(i=>execute(i.SID));
         let totalPL=0;
@@ -89,6 +95,18 @@ export const StrategySix=(data)=>{
         });
         console.log(plArr);
         console.log(`Total PL is ${totalPL}`);
+        */
+      
+       //merge the Symbol data;
+       const allCos = JSON.parse(localStorage.getItem('allcos'));
+       const filteredData = First5MinsPlus.map(i=>{
+           const co = allCos.find(c=>c.sid==i.SID);
+           return {...co,...i}
+       });
+       return {
+        data : filteredData,
+        refreshRequired : false
+    }
     }
     return [];
 }
