@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import * as filters from './ScreenerFilters';
-import DataLoader from "./DataLoader";
 import TickerTrendLoader from "./TickerTrendLoader";
 
 const ScreenerExecutor = (props) => {

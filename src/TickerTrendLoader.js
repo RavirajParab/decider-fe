@@ -39,7 +39,7 @@ const TickerTrendLoader = (props) => {
         console.log(`Missing part ${index} will be attempted`);
         const data = await getDRSIData(i);
         localStorage.setItem(`p${index}`,JSON.stringify({
-          data : data
+          data : data.filter(i=>i!==null)
         }));
         setDataLoad(`Finished getting p${index} data`);
         await wait();

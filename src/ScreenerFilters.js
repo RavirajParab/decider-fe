@@ -1,3 +1,10 @@
+/* Executor properties */
+let timeOfShorting = 30; //0 is 9.15 Am, 24 is 9.39Am, 30 is 9.45Am, 45 is 10Am
+//ideal time to short is 9.45Am
+let Money =25000; //Amount to be invested
+let Tax = Math.round(Money*0.00085); //Taxes
+let SLTgtPerc = 1.5/100;    //SL or target percentage
+/* Executor properties */
 
 export const StrategyOne=(data)=>{
     //More negativity is growing
@@ -122,13 +129,14 @@ const getPL =(timeline, dayEnded)=>{
     let slHitIndex=-1;
     let tgtHitIndex=-1;
     let time =null;
-    if(timeline.length>24){
-        sp = timeline[24].lp;
-        qty = Math.round(100000/sp);
-        sl = Math.round(sp+sp*0.015);
-        tg = Math.round(sp-sp*0.015);
+    
+    if(timeline.length>timeOfShorting){
+        sp = timeline[timeOfShorting].lp;
+        qty = Math.round(Money/sp);
+        sl = Math.round(sp+sp*SLTgtPerc);
+        tg = Math.round(sp-sp*SLTgtPerc);
         for (let index = 0; index < timeline.length-15; index++) {
-            if(index>24){
+            if(index>timeOfShorting){
                 //get the cp
                 let item = timeline[index];
                 if(item.lp>sl){
@@ -167,9 +175,10 @@ const getPL =(timeline, dayEnded)=>{
      //calculate the profit using the SP and CP
      pl = Math.round((sp-cp)*qty);
      return {
-         PL : pl-85,//due to tax
+         PL : pl-Tax,//due to tax
          Time : (new Date(time)).toLocaleTimeString(),
          SL :sl,
+         Qty : qty,
          Target : tg
      }
 }
