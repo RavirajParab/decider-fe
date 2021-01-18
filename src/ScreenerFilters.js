@@ -15,16 +15,11 @@ export const StrategyOne=(data)=>{
     ))
     .sort((a,b)=>a.IR-b.IR); 
     //pL execution stub starts here
-    const plArr = filteredData.map(i=>execute(i.sid));
-        let totalPL=0;
-        plArr.forEach(element => {
-            totalPL+=element.PL
-        });
-        console.log(plArr);
-        console.log(`Total PL is ${totalPL}`);
+   
         //pL execution stub ends here
     return {
         data : filteredData,
+        PLData : evaluatePLMoney(filteredData),
         refreshRequired : true
     }
 }
@@ -201,6 +196,20 @@ const getPL =(timeline, dayEnded)=>{
      }
 }
 
+const evaluatePLMoney =(filteredData)=>{
+    const plArr = filteredData.map(i=>execute(i.sid));
+    let totalPL=0;
+    plArr.forEach(element => {
+        totalPL+=element.PL
+    });
+    console.log(plArr);
+    console.log(`Total PL is ${totalPL}`);
+    return {
+        Executions : plArr,
+        NetPLPostTax : totalPL
+    }
+    
+}
 
 
 export const None=(data)=>{
