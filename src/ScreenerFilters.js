@@ -19,7 +19,6 @@ export const StrategyOne=(data)=>{
         //pL execution stub ends here
     return {
         data : filteredData,
-        PLData : evaluatePLMoney(filteredData),
         refreshRequired : true
     }
 }
@@ -66,11 +65,6 @@ export const StrategyFour=(data)=>{
 }
 
 export const StrategyFive=(data)=>{
-    return [];
-}
-
-
-export const StrategySix=(data)=>{
     //get the trend data
     const trends = JSON.parse(localStorage.getItem('trenddata'));
     if(trends.length){
@@ -80,18 +74,6 @@ export const StrategySix=(data)=>{
               i.Trend.First15MinR<0 && 
               i.Trend.First15MinR<1.7*i.Trend.First5MinR
             ));
-            /*
-       
-        //test execute pl
-        const plArr = First5MinsPlus.map(i=>execute(i.SID));
-        let totalPL=0;
-        plArr.forEach(element => {
-            totalPL+=element.PL
-        });
-        console.log(plArr);
-        console.log(`Total PL is ${totalPL}`);
-        */
-      
        //merge the Symbol data;
        const allCos = JSON.parse(localStorage.getItem('allcos'));
        const filteredData = First5MinsPlus.map(i=>{
@@ -103,11 +85,6 @@ export const StrategySix=(data)=>{
         refreshRequired : false
     }
     }
-    return [];
-}
-
-export const StrategySeven=(data)=>{
-   // execute('BJFN');
     return [];
 }
 
@@ -196,14 +173,14 @@ const getPL =(timeline, dayEnded)=>{
      }
 }
 
-const evaluatePLMoney =(filteredData)=>{
+export const evaluatePLMoney =(filteredData)=>{
     const plArr = filteredData.map(i=>execute(i.sid));
     let totalPL=0;
     plArr.forEach(element => {
         totalPL+=element.PL
     });
-    console.log(plArr);
-    console.log(`Total PL is ${totalPL}`);
+    //console.log(plArr);
+    //console.log(`Total PL is ${totalPL}`);
     return {
         Executions : plArr,
         NetPLPostTax : totalPL

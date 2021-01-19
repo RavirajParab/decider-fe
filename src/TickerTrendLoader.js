@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Axios from 'axios';
-import LocalSIDData from "./data";
+import DataLoader from "./DataLoader";
 
 const TickerTrendLoader = (props) => {
   const [DataLoad,setDataLoad] = useState('Initialized!');
@@ -58,7 +58,7 @@ const TickerTrendLoader = (props) => {
       }
     });
     if(check){
-      console.log(`All ticker parts are intact, hence mergering them`);
+      setDataLoad(`All ticker parts are intact, hence mergering them`);
       const mergedData=[];
       sidsArr.forEach((i,index)=>{
         const data =JSON.parse(localStorage.getItem(`p${index}`));
@@ -67,20 +67,22 @@ const TickerTrendLoader = (props) => {
           mergedData.push({DRSI,IR,Price,SID, Trend});
         });
       });
-      console.log(mergedData);
+      //console.log(mergedData);
       localStorage.removeItem('trenddata');
       localStorage.setItem('trenddata',JSON.stringify(mergedData));
-      console.log(`Trend Data is collated!`);
+      setDataLoad(`Trend Data is collated!`);
+    }else{
+      setDataLoad('Please hit trends again since some data is missing');
     }
   };
 
   //reset parts
   const resetTicker =()=>{
-    console.log(`Resetting cached ticker data`);
+    setDataLoad(`Resetting cached ticker data`);
     sidsArr.forEach((i,index)=>{
       localStorage.removeItem(`p${index}`);
     });
-    console.log(`Cached ticker data is cleared!`);
+    setDataLoad(`Cached ticker data is cleared!`);
   }
 
 
@@ -89,7 +91,7 @@ const TickerTrendLoader = (props) => {
     try{
       setDataLoad('Data collecting started....');
       await fetchData();
-      setDataLoad('Data collecting finished!');
+      
     }catch(err){
        setDataLoad(err);
     }
@@ -98,8 +100,12 @@ const TickerTrendLoader = (props) => {
     <table>
       <tbody>
       <tr>
-        <td> <button className="btn btn-info ml-2" onClick={processData}>Get Trends</button><br/></td>
-        <td><button className="btn btn-info ml-2" onClick={resetTicker}>Reset Ticker</button><br/></td>
+        <td><DataLoader/></td>
+        <td> <button className="btn btn-info ml-2" onClick={processData}>Get Trends</button>
+        <br/><span className="pl-4">{DataLoad}</span>
+        <br/></td>
+        <td><button className="btn btn-info ml-2" onClick={resetTicker}>Reset Ticker</button>
+        <br/><span className="pl-4">{DataLoad}</span></td>
       </tr>
       </tbody>
      

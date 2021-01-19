@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import * as filters from './ScreenerFilters';
-import DataLoader from "./DataLoader";
+import TickerTrendLoader from "./TickerTrendLoader";
+
 
 const Screener = (props) => {
   const [SecData, setSecData] = useState([]);
   const [Data, setData] = useState([]);
   const [HitRate, setHitRate] = useState([]);
+  const [PL, setPL] = useState(0);
   useEffect(() => {
     //get and set the ticker data
     const DataLS = JSON.parse(localStorage.getItem('allcos'));
@@ -24,6 +26,9 @@ const Screener = (props) => {
     setData(filteredData.data);
     setCalculatedHitRate(filteredData.data);
    }
+   //Finally set the PL
+   const calculatedPL = filters.evaluatePLMoney(filteredData.data);
+   setPL(calculatedPL.NetPLPostTax);
   }
 
   const setCalculatedHitRate =(data)=>{
@@ -52,8 +57,8 @@ const Screener = (props) => {
   
   return (  
     <div>
-      <DataLoader/> 
-      <h3>Select Filter {HitRate}</h3><br/>
+      <TickerTrendLoader/>
+      <h3>Select Filter {HitRate} | PL {PL}  </h3><br/>
       <label htmlFor="Filter">Select Security</label>
           <select
             className="form-control"
@@ -66,7 +71,6 @@ const Screener = (props) => {
               <option key='StrategyThree'>StrategyThree</option>
               <option key='StrategyFour'>StrategyFour</option>
               <option key='StrategyFive'>StrategyFive</option>
-              <option key='StrategySix'>StrategySix</option>
           </select>
           <table className="table table-striped">
             <thead>

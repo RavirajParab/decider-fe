@@ -4,7 +4,6 @@ import RSIOversold from "./RSIOversold";
 import MMI from "./Mmi";
 import AVD from "./Avd";
 import Etf from "./Etf";
-import ScreenerExecutor from "./ScreenerExecutor";
 //import ShortPositions from "./ShortPositions";
 import Balance from "./Balance";
 import FellToday from "./FellToday";
@@ -85,11 +84,7 @@ const Navigation = () => {
                 Screener
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/se">
-                Executor
-              </Link>
-            </li>
+            
 
             {/* <li className="nav-item">
               <Link className="nav-link" to="/shortpositions">
@@ -145,9 +140,7 @@ const Navigation = () => {
           <AVD />
           <Timing/>
         </Route> 
-        <Route path="/se">
-          <ScreenerExecutor/>
-        </Route> 
+       
 
         {/* <Route path="/bc">
           <MMI />

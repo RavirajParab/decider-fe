@@ -45,7 +45,7 @@ const DataLoader = (props) => {
   return (  
     <div>
       <button className="btn btn-info ml-2" onClick={processData}>Fetch latest Data</button><br/>
-      <span className="muted-text">{DataLoad}</span>
+      <span className="pl-4">{DataLoad}</span>
     </div>
   );
 };
