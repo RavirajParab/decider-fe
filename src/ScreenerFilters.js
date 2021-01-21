@@ -174,13 +174,16 @@ const getPL =(timeline, dayEnded)=>{
 }
 
 export const evaluatePLMoney =(filteredData)=>{
+   // console.log(filteredData);
     const plArr = filteredData.map(i=>execute(i.sid));
     let totalPL=0;
     plArr.forEach(element => {
-        totalPL+=element.PL
+        if(element){
+            totalPL+=element.PL
+        }
     });
-    //console.log(plArr);
-    //console.log(`Total PL is ${totalPL}`);
+    console.log(plArr);
+    console.log(`Total PL is ${totalPL}`);
     return {
         Executions : plArr,
         NetPLPostTax : totalPL

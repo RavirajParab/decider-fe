@@ -21,6 +21,7 @@ const Screener = (props) => {
    const filteredData= filters[filter](SecData);
    if(filteredData.refreshRequired){
     getDynamicData(filteredData.data);
+   
    }else{
     //console.log(filteredData.data);
     setData(filteredData.data);
@@ -47,6 +48,7 @@ const Screener = (props) => {
         return {...i,...rawData[index]}
       });
       setData(mergeData);
+      console.log(mergeData);
       setCalculatedHitRate(mergeData);
     }else{
       setData([]);
@@ -76,6 +78,9 @@ const Screener = (props) => {
             <thead>
               <tr>
                 <th scope="col">Symbol</th>
+                <th scope="col">15MinTrend</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Tgt/SL</th>
                 <th scope="col">DRSI</th>
                 <th scope="col">IR</th>
                 
@@ -97,6 +102,9 @@ const Screener = (props) => {
                    <span style={{color:(Number(i.Open)-Number(i.Close))>0?'Red':'Green'}}>{i.Symbol?i.Symbol:i.SID}</span>  
                     </a>{" "}
                   </td>
+                  <td>{i.Trend?i.Trend.First5MinR: '-'}</td>
+                  <td>{i.LQTY?Math.round(i.LQTY): '-'}</td>
+                  <td>{i.tgtOrLS?i.tgtOrLS: (i.Price*0.015).toFixed(2)}</td>
                   <td>{i.RSI?i.RSI.toFixed(2): '-'}</td>
                   <td>{i.IR}</td>
                  
