@@ -29,7 +29,7 @@ const Performance = (props) => {
       });
      
       const rsiData = companies
-        .filter(i=>i!==undefined)
+        .filter(i=>(i!==undefined && i!=null))
         .sort((a, b) => a.monthlyPercentageChange - b.monthlyPercentageChange);
         console.log(rsiData); 
       setData(rsiData);
