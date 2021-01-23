@@ -23,20 +23,7 @@ export const StrategyOne=(data)=>{
     }
 }
 
-
 export const StrategyTwo=(data)=>{
-    //hasn't been beaten over long time yet
-    const filteredData = data.filter(i=>
-        i.Open<i.PClose && i.PIR>0 && i.PChange5>0
-                                    )
-                            .sort((a,b)=>a.IR-b.IR)  ;
-                            return {
-                                data : filteredData,
-                                refreshRequired : true
-                            }
-}
-
-export const StrategyThree=(data)=>{
     //blasted yesterday with high intra day gain
     const filteredData = data.filter(i=>
                                         i.PIR>2.2
@@ -50,7 +37,7 @@ export const StrategyThree=(data)=>{
 }
 
 
-export const StrategyFour=(data)=>{
+export const StrategyThree=(data)=>{
     //losing stem in last 5 days
     const filteredData = data.filter(i=>
                                         i.PChange5<0 
@@ -64,7 +51,7 @@ export const StrategyFour=(data)=>{
                             }
 }
 
-export const StrategyFive=(data)=>{
+export const StrategyFour=(data)=>{
     //get the trend data
     const trends = JSON.parse(localStorage.getItem('trenddata'));
     if(trends.length){

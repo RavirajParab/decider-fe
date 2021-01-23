@@ -71,8 +71,7 @@ const Screener = (props) => {
               <option key='StrategyOne'>StrategyOne</option>
               <option key='StrategyTwo'>StrategyTwo</option>
               <option key='StrategyThree'>StrategyThree</option>
-              <option key='StrategyFour'>StrategyFour</option>
-              <option key='StrategyFive'>StrategyFive</option>
+              <option key='StrategyFive'>StrategyFour</option>
           </select>
           <table className="table table-striped">
             <thead>
