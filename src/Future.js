@@ -22,6 +22,7 @@ const Future = (props) => {
                 if(co.length===0){
                     console.log(`${x.sid} is missing; need to add it to Data.js`);
                     co.Symbol='Missing';
+                    return null;
                   }
                   else{
                     return {...co[0],...x}
@@ -33,6 +34,7 @@ const Future = (props) => {
             setData(allPositives);
         };
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
  
     return (

@@ -44,6 +44,7 @@ const DeliveryPositions = (props) => {
         SetDeliveryPositions(NewDeliveryPositions);
         }
         getDeliveryPositions();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   //change PL

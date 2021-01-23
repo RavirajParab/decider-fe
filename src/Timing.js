@@ -41,6 +41,7 @@ const Timing = (props) => {
       }, 120000);
       return () => clearInterval(interval);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -48,6 +49,7 @@ const Timing = (props) => {
       await getData();
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -71,11 +73,11 @@ const Timing = (props) => {
                   </td>
 
                   <td style={{ backgroundColor: i.srange ? 'lightgreen' : null }}>
-                     {i.stime=='Invalid Date'?'-':i.stime}
+                     {i.stime==='Invalid Date'?'-':i.stime}
                   </td>
 
                   <td style={{ backgroundColor: i.brange ? 'lightgreen' : null }}>
-                    {i.btime=='Invalid Date'?'-':i.btime}
+                    {i.btime==='Invalid Date'?'-':i.btime}
                   </td>
                 </tr>)
               }

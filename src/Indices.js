@@ -7,8 +7,6 @@ import LocalSIDData from "./data";
 
 
 const Indices = (props) => {
-    const AllCosString = localStorage.getItem("allcos");
-    // const AllCos = JSON.parse(AllCosString);
     const [data, setData] = useState([]);
 
     useEffect(() => {

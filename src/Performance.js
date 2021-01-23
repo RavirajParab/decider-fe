@@ -23,6 +23,8 @@ const Performance = (props) => {
             change5: cos.Change5,
             change14: cos.Change14
           }
+        }else{
+          return null;
         }
       });
      

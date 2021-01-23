@@ -11,7 +11,7 @@ export const StrategyOne=(data)=>{
     const filteredData = data.filter(i=>(
         i.PChange14<i.PChange5 
         && i.PChange<-1.
-        && i.RSI!=undefined 
+        && i.RSI!==undefined 
     ))
     .sort((a,b)=>a.IR-b.IR); 
     //pL execution stub starts here
@@ -40,7 +40,7 @@ export const StrategyThree=(data)=>{
     //blasted yesterday with high intra day gain
     const filteredData = data.filter(i=>
                                         i.PIR>2.2
-                                        && i.RSI!=undefined 
+                                        && i.RSI!==undefined 
                                     )
                             .sort((a,b)=>a.IR-b.IR)                               
                             return {
@@ -55,7 +55,7 @@ export const StrategyFour=(data)=>{
     const filteredData = data.filter(i=>
                                         i.PChange5<0 
                                         && i.PChange14>3
-                                        && i.RSI!=undefined 
+                                        && i.RSI!==undefined 
                                     )
                             .sort((a,b)=>a.IR-b.IR)   ;
                             return {
@@ -77,7 +77,7 @@ export const StrategyFive=(data)=>{
        //merge the Symbol data;
        const allCos = JSON.parse(localStorage.getItem('allcos'));
        const filteredData = First5MinsPlus.map(i=>{
-           const co = allCos.find(c=>c.sid==i.SID);
+           const co = allCos.find(c=>c.sid===i.SID);
            return {...co,...i}
        });
        return {
@@ -144,7 +144,7 @@ const getPL =(timeline, dayEnded)=>{
        
     }
      
-     if(slHitIndex==-1 & tgtHitIndex==-1){
+     if(slHitIndex===-1 & tgtHitIndex===-1){
          //LS or target didn't strike struck
          if(dayEnded){
             cp = timeline[timeline.length-20].lp;
