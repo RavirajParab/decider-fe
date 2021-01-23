@@ -32,6 +32,19 @@ const Screener = (props) => {
    setPL(calculatedPL.NetPLPostTax);
   }
 
+  //sortOn15MinTrend
+  const sortOn15MinTrend =()=>{
+      const copy_Data = [...Data];
+      const sortedData =copy_Data.sort((a,b)=>(a.Trend.First15MinR-b.Trend.First15MinR));
+      setData(sortedData);
+  }
+
+  const sortOnIR =()=>{
+    const copy_Data = [...Data];
+      const sortedData =copy_Data.sort((a,b)=>(a.IR-b.IR));
+      setData(sortedData);
+  }
+
   const setCalculatedHitRate =(data)=>{
     //Evaluate the Hit Rate  
     const fell = data.filter(i=>i.IR<0);
@@ -77,11 +90,11 @@ const Screener = (props) => {
             <thead>
               <tr>
                 <th scope="col">Symbol</th>
-                <th scope="col">15MinTrend</th>
+                <th scope="col"><button onClick={sortOn15MinTrend} className="btn btn-info">15MinTrend</button></th>
                 <th scope="col">Qty</th>
                 <th scope="col">Tgt/SL</th>
                 <th scope="col">DRSI</th>
-                <th scope="col">IR</th>
+                <th scope="col"><button onClick={sortOnIR} className="btn btn-info">IR</button></th>
                 
                 
               </tr>
@@ -101,7 +114,7 @@ const Screener = (props) => {
                    <span style={{color:(Number(i.Open)-Number(i.Close))>0?'Red':'Green'}}>{i.Symbol?i.Symbol:i.SID}</span>  
                     </a>{" "}
                   </td>
-                  <td>{i.Trend?i.Trend.First5MinR: '-'}</td>
+                  <td>{i.Trend?i.Trend.First15MinR: '-'}</td>
                   <td>{i.LQTY?Math.round(i.LQTY): '-'}</td>
                   <td>{i.tgtOrLS?i.tgtOrLS: (i.Price*0.015).toFixed(2)}</td>
                   <td>{i.RSI?i.RSI.toFixed(2): '-'}</td>
