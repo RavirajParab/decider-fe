@@ -4,6 +4,7 @@ import RSIOversold from "./RSIOversold";
 import MMI from "./Mmi";
 import AVD from "./Avd";
 import Etf from "./Etf";
+import TimingETF from "./TimingETF";
 //import ShortPositions from "./ShortPositions";
 import Balance from "./Balance";
 import FellToday from "./FellToday";
@@ -112,6 +113,12 @@ const Navigation = () => {
               </Link>
             </li>
 
+            <li className="nav-item">
+              <Link className="nav-link" to="/timingetf">
+                Timing ETF
+              </Link>
+            </li>
+
             {/* <li className="nav-item">
               <Link className="nav-link" to="/bc">
                 Buy Candidate
@@ -139,6 +146,12 @@ const Navigation = () => {
           <MMI />
           <AVD />
           <Timing/>
+        </Route> 
+
+        <Route path="/timingetf">
+          <MMI />
+          <AVD />
+          <TimingETF/>
         </Route> 
        
 
